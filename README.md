@@ -12,3 +12,5 @@ After executing the program, the following procedure takes part:
 to meet the 1st robot
 
 "input2.txt", "input3.txt" are input files with bigger map.
+
+Download "input.txt" and 'robots.exe" release to test the application.
