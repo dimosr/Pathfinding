@@ -1,11 +1,11 @@
 
 
 
-		---------------------------------------------------------
-		|						 	|
-		|		Artificial Intelligence - A* Algorithm 	|
-		|							|
-		---------------------------------------------------------
+		-----------------------------------------------------
+		|													|
+		|		Artificial Intelligence - A* Algorithm 		|
+		|													|
+		-----------------------------------------------------
 
 
 This repository contains implementations for A* algorithm used for pathfinding in languages Java and C.
