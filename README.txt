@@ -3,7 +3,7 @@
 
 		---------------------------------------------------------
 		|						 	|
-		|		Artificial Intelligence - A* Algorithm 	|
+		|	Artificial Intelligence - A* Algorithm 		|
 		|							|
 		---------------------------------------------------------
 
