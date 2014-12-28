@@ -22,9 +22,9 @@ To test the application :
 #Compile the application
 gcc src/robots.c robots			#executable also available from github as release
 #Test the application with sample inputs
-src/robots	input.txt
-src/robots 	input2.txt
-src/robots	input3.txt
+src/robots	input_files/input.txt
+src/robots 	input_files/input2.txt
+src/robots	input_files/input3.txt
 ```
 
 Language Java
