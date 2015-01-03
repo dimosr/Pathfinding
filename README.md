@@ -1,6 +1,6 @@
 
 
-IMPLEMENTATION OF A* ARTIFICIAL INTELLIGENCE ALGORITHM (in Java and C)
+IMPLEMENTATION OF A*<br/> ARTIFICIAL INTELLIGENCE ALGORITHM<br/> (in Java and C)
 ======================================================================
 
 Introduction
