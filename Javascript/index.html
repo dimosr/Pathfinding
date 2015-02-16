@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="A* algorithm Demo">
+    <link rel="author" href="https://plus.google.com/u/0/109367408184945231012"/>
+    <link href="foundation/css/foundation.min.css" rel="stylesheet">
+    <link href="css/index.css" rel="stylesheet">
+
+    <script src="foundation/js/vendor/modernizr.js"></script>
+    <script src="foundation/js/vendor/jquery.js"></script>
+    <script src="foundation/js/vendor/fastclick.js"></script>
+    <script src="foundation/js/foundation.min.js"></script>
+    <script src="js/app.js"></script>
+    <title>A* algorithm Demo</title>
+</head>
+
+
+<body>
+    <div id="description">
+        This is a demo of A* algorithm implemented in Javascript.
+    </div>
+
+    <div id="map">
+    </div>
+
+    <script>
+        
+        var map_dimension = 20;
+        createSquareMap(map_dimension, "map");
+
+        $(document).foundation();
+    </script>
+</body>
+</html>
