@@ -13,7 +13,12 @@
     <script src="foundation/js/vendor/jquery.js"></script>
     <script src="foundation/js/vendor/fastclick.js"></script>
     <script src="foundation/js/foundation.min.js"></script>
+
+    <link rel="stylesheet" href="css/custom-qunit.css">
+    <script src="js/qunit.js"></script>
+
     <script src="js/app.js"></script>
+    <script src="js/ui.js"></script>
     <title>A* algorithm Demo</title>
 </head>
 
@@ -27,11 +32,21 @@
     </div>
 
     <script>
-        
         var map_dimension = 20;
         createSquareMap(map_dimension, "map");
 
         $(document).foundation();
+    </script>
+
+    <div id="unit-test-button" class="button success">Enable Unit Tests</div>
+    <div id="qunit"></div>
+    <div id="qunit-fixture"></div>
+    <script>
+        var unitTestsExecuted = false;
+        var unitTestsVisible = false;
+        $('#unit-test-button').click(function(){
+            handleUnitTests();
+        })
     </script>
 </body>
 </html>
