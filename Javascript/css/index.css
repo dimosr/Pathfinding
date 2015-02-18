@@ -4,15 +4,21 @@
     text-align:center;
 }
 
-#map{
-    width: 80%;
-}
-
 .cell{
     float:left; 
     border:1px solid black; 
     height:40px;
     background-color:#C3C1AE;
+}
+
+#map{
+    padding:20px;
+}
+
+#map-description{
+    padding:20px;
+    border:solid 2px white;
+    border-radius:15px;
 }
 
 #qunit{
@@ -29,3 +35,26 @@
 #qunit-tests  li  a {
 	display:none !important;
 } 
+
+.fullWidth {
+   width: 100%;
+   margin-left: auto;
+   margin-right: auto;
+   max-width: initial;
+}
+
+.row{
+    margin-top:30px;
+}
+
+.green{
+    background-color: green;
+}
+
+.red{
+    background-color: red;
+}
+
+.black{
+    background-color: black;
+}

@@ -28,17 +28,27 @@
         This is a demo of A* algorithm implemented in Javascript.
     </div>
 
-    <div id="map">
+    <div id="map-container" class="row fullWidth">
+
+        <div id="map" class="columns small-8 large-8">
+        </div>
+
+        <div id="map-description" class="columns small-4 large-4">
+            Map Description
+        </div>
+
     </div>
 
     <script>
-        var map_dimension = 20;
-        createSquareMap(map_dimension, "map");
+        createSquareMap(24, "map");
 
         $(document).foundation();
     </script>
 
-    <div id="unit-test-button" class="button success">Enable Unit Tests</div>
+    <div id="button-container" class="row fullWidth">
+        <div id="unit-test-button" class="button success">Enable Unit Tests</div>
+    </div>
+
     <div id="qunit"></div>
     <div id="qunit-fixture"></div>
     <script>

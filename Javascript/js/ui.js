@@ -1,3 +1,22 @@
+function createSquareMap(mapDimension, containerID){
+
+    var div = $('<div>', {class: 'cell'});
+    div = div.width('30px');
+    div = div.height( '30px' );
+
+    for(var i = 0; i < mapDimension; i++){
+        for(var j = 0; j < mapDimension; j++){
+            if(j==0){
+                var cell = $( "#" + containerID ).append( div.clone().css('clear', 'left') );
+            }
+            else{
+                var cell = $( "#" + containerID ).append( div.clone() );
+            }
+        }
+    }
+
+}
+
 function handleUnitTests(){
 	if(unitTestsExecuted == false){
         QUnit.test( "hello test", function( assert ) {
