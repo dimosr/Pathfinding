@@ -34,7 +34,20 @@
         </div>
 
         <div id="map-description" class="columns small-4 large-4">
-            Map Description
+            <h2>A* algorithm Demo</h2>
+            <div class="columns small-12 large-12">
+                This is a DEMO implementation of the A* algorithm using Javascript language. It is a Test Driven Developed Demo, so you can
+                view all the Unit Tests with the button downwards. The following button is used to execute the demo. <br/><br/>
+
+                The steps are the following.
+                <ul>
+                    <li> Press the button to set the obstacles in the map.</li>
+                    <li> Press the button to set the positions of the 2 robots.</li>
+                    <li> Press the button to execute the DEMO</li>
+                </ul>
+            </div>
+
+            <div id="demo-button" class="button info">Set obstacles in the map</div>
         </div>
 
     </div>
@@ -56,6 +69,28 @@
         var unitTestsVisible = false;
         $('#unit-test-button').click(function(){
             handleUnitTests();
+        })
+
+        $('#demo-button').click(function(){
+            $(this).unbind('click');
+            $(this).removeClass('info').addClass('disabled');
+            enableObstacles();
+            $(this).html("Set robots positions.");
+            $(this).click(function(){
+                $(this).unbind('click');
+                $(this).removeClass('disabled').addClass('success');
+                $(this).html("Execute DEMO");
+                setRobotsPositions();
+                $(this).click(function(){
+                    $(this).unbind('click');
+                    $(this).removeClass('success').addClass('alert');
+                    $(this).html("Reset DEMO");
+                    executeAlgorithm();
+                    $(this).click(function(){
+                        location.reload();
+                    });
+                });
+            });
         })
     </script>
 </body>

@@ -25,6 +25,22 @@ function transform2Dto1D(row, column, dimension){
     }
 }
 
+function enableObstacles(){
+    alert("You can set the obstacles in the map by clicking on a node.\n" +
+            "Grey nodes are free and black nodes are obstacles.\n" +
+            "When you have finished, press again the button to proceed.\n");
+}
+
+function setRobotsPositions(){
+    alert("You can set the positions of the 2 robots by clicking on a node.\n" +
+            "If you click when having already defined the 2 robots, the oldest one will be reset.\n" +
+            "When you have finished, press again the button to execute the DEMO.\n");
+}
+
+function executeAlgorithm(){
+    alert("Algorithm executed !");
+}
+
 
 function getCell(cellClass, row, column, mapDimension){
     var index_1D = transform2Dto1D(row, column, mapDimension);
