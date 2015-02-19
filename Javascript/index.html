@@ -74,13 +74,14 @@
         $('#demo-button').click(function(){
             $(this).unbind('click');
             $(this).removeClass('info').addClass('disabled');
-            enableObstacles();
-            $(this).html("Set robots positions.");
+            enableObstacles("cell");
+            $(this).html("Done with obstacles. Set robots positions.");
             $(this).click(function(){
                 $(this).unbind('click');
                 $(this).removeClass('disabled').addClass('success');
                 $(this).html("Execute DEMO");
-                setRobotsPositions();
+                disableObstacles("cell");
+                enableRobotsPositions("cell", "black");
                 $(this).click(function(){
                     $(this).unbind('click');
                     $(this).removeClass('success').addClass('alert');

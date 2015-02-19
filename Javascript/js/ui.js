@@ -25,13 +25,33 @@ function transform2Dto1D(row, column, dimension){
     }
 }
 
-function enableObstacles(){
+function enableObstacles(cellClass){
+    $('.' + cellClass).each(function(){
+        $(this).click(function(){
+            toggleObstacleState($(this));
+        });
+    });
     alert("You can set the obstacles in the map by clicking on a node.\n" +
             "Grey nodes are free and black nodes are obstacles.\n" +
             "When you have finished, press again the button to proceed.\n");
+
 }
 
-function setRobotsPositions(){
+function disableObstacles(cellClass){
+    $('.' + cellClass).each(function(){
+        $(this).unbind('click');
+    });
+}
+
+function enableRobotsPositions(cellClass, obstacleClass){
+    $('.' + cellClass).not('.' + obstacleClass).click(function(){
+        setRobot1($(this));
+        $('.' + cellClass).unbind('click');
+        $('.' + cellClass).not('.' + obstacleClass).not('.robot1').click(function(){
+            setRobot2($(this));
+            $('.' + cellClass).unbind('click');
+        });
+    });
     alert("You can set the positions of the 2 robots by clicking on a node.\n" +
             "If you click when having already defined the 2 robots, the oldest one will be reset.\n" +
             "When you have finished, press again the button to execute the DEMO.\n");
@@ -49,7 +69,22 @@ function getCell(cellClass, row, column, mapDimension){
 
 function setNodeExpanded(obj){
     obj.removeClass( "red" ).addClass("green");
+}
 
+function toggleObstacleState(obj){
+    obj.toggleClass("black");
+}
+
+function setRobot1(obj){
+    robot1Image = "img/robot1.gif"
+    obj.addClass("robot1");
+    obj.html("<img src='" + robot1Image + "'/>");
+}
+
+function setRobot2(obj){
+    robot2Image = "img/robot2.jpg"
+    obj.addClass("robot2");
+    obj.html("<img src='" + robot2Image + "'/>");
 }
 
 
