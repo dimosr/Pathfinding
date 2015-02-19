@@ -30,7 +30,7 @@ src/robots	input_files/input3.txt
 Language Java
 ------------------------------------------------------------------------------------------------
 
-* In the folder *'src'*, the file Golfo contains the main class used to resolve the problem of pathfinding.
+* In the folder *'src'*, the file A_StarAlgorithm contains the main class used to resolve the problem of pathfinding.
 * In folder *'input_files'*, there are sample input files that can be used to test the program.
 * The input files contain a map with certain "obstacles" and the initial places of 2 "robots".
 * After executing the program, the output is the number of moves the first robot has to do at least to reach the second robot in its initial place
@@ -38,14 +38,14 @@ Language Java
 To test the application :
 ```sh
 #Compile the application
-javac src/InvalidLetterException.java src/BinaryMinHeap_PriorityQueue.java src/Golfo.java 
+javac src/InvalidLetterException.java src/BinaryMinHeap_PriorityQueue.java src/A_StarAlgorithm.java 
 #Test the application with sample inputs
-src/Golfo	input_files/small_1.txt
-src/Golfo 	input_files/small_2.txt
-src/Golfo	input_files/medium_1.txt
-src/Golfo	input_files/medium_2.txt
-src/Golfo	input_files/medium_3.txt
-src/Golfo	input_files/medium_4.txt
-src/Golfo	input_files/medium_5.txt
-src/Golfo	input_files/large.txt
+java -cp src A_StarAlgorithm input_files/small_1.txt
+java -cp src A_StarAlgorithm input_files/small_2.txt
+java -cp src A_StarAlgorithm input_files/medium_1.txt
+java -cp src A_StarAlgorithm input_files/medium_2.txt
+java -cp src A_StarAlgorithm input_files/medium_3.txt
+java -cp src A_StarAlgorithm input_files/medium_4.txt
+java -cp src A_StarAlgorithm input_files/medium_5.txt
+java -cp src A_StarAlgorithm input_files/large.txt
 ```

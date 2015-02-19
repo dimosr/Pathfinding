@@ -23,7 +23,7 @@ import java.io.*;
 
 /*NOTICE:Coordinate i corresponds to y axis and Coordinate j corresponds to x axis*/
 
-public class Golfo {
+public class A_StarAlgorithm {
 
 
 
