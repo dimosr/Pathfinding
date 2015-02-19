@@ -38,7 +38,7 @@ Language Java
 To test the application :
 ```sh
 #Compile the application
-javac src/InvalidLetterException.java src/BinaryMinHeap_PriorityQueue.java src/A_StarAlgorithm.java 
+javac src/InvalidLetterException.java src/BinaryMinHeap_PriorityQueue.java src/SearchGraphNode.java src/A_StarAlgorithm.java 
 #Test the application with sample inputs
 java -cp src A_StarAlgorithm input_files/small_1.txt
 java -cp src A_StarAlgorithm input_files/small_2.txt
