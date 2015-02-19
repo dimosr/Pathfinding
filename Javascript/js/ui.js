@@ -1,3 +1,5 @@
+/* Initialization of Map */
+
 function createSquareMap(mapDimension, containerID){
 
     var div = $('<div>', {class: 'cell'});
@@ -16,16 +18,9 @@ function createSquareMap(mapDimension, containerID){
     }
 }
 
-function transform2Dto1D(row, column, dimension){
-    if( (row > (dimension-1)) || (column > (dimension-1)) ){
-        throw new Error("Array out of Index");
-    }
-    else{
-        return (row*dimension + column);
-    }
-}
+/* ----  UI Workflow functions ---- */
 
-function enableObstacles(cellClass){
+function enableObstacles(){
     $('.' + cellClass).each(function(){
         $(this).click(function(){
             toggleObstacleState($(this));
@@ -37,13 +32,13 @@ function enableObstacles(cellClass){
 
 }
 
-function disableObstacles(cellClass){
+function disableObstacles(){
     $('.' + cellClass).each(function(){
         $(this).unbind('click');
     });
 }
 
-function enableRobotsPositions(cellClass, obstacleClass){
+function enableRobotsPositions(){
     $('.' + cellClass).not('.' + obstacleClass).click(function(){
         setRobot1($(this));
         $('.' + cellClass).unbind('click');
@@ -61,8 +56,25 @@ function executeAlgorithm(){
     alert("Algorithm executed !");
 }
 
+function toggleObstacleState(obj){
+    obj.toggleClass("obstacle");
+}
 
-function getCell(cellClass, row, column, mapDimension){
+function setRobot1(obj){
+    robot1Image = "img/robot1.gif"
+    obj.addClass(robot1Class);
+    obj.html("<img src='" + robot1Image + "'/>");
+}
+
+function setRobot2(obj){
+    robot2Image = "img/robot2.jpg"
+    obj.addClass(robot2Class);
+    obj.html("<img src='" + robot2Image + "'/>");
+}
+
+/* ----  Algorithm API functions ---- */
+
+function getCell(row, column, mapDimension){
     var index_1D = transform2Dto1D(row, column, mapDimension);
     return $( $('.' + cellClass).get( index_1D ) );
 }
@@ -71,25 +83,31 @@ function setNodeExpanded(obj){
     obj.removeClass( "red" ).addClass("green");
 }
 
-function toggleObstacleState(obj){
-    obj.toggleClass("black");
+function transform2Dto1D(row, column, dimension){
+    if( (row > (dimension-1)) || (column > (dimension-1)) ){
+        throw new Error("Array out of Index");
+    }
+    else{
+        return (row*dimension + column);
+    }
 }
 
-function setRobot1(obj){
-    robot1Image = "img/robot1.gif"
-    obj.addClass("robot1");
-    obj.html("<img src='" + robot1Image + "'/>");
+function isObstacle(obj){
+    return obj.hasClass(obstacleClass);
 }
 
-function setRobot2(obj){
-    robot2Image = "img/robot2.jpg"
-    obj.addClass("robot2");
-    obj.html("<img src='" + robot2Image + "'/>");
+function isRobot1(obj){
+    obj.hasClass(robot1Class);
 }
 
+function isRobot2(obj){
+    obj.hasClass(robot2Class);
+}
+
+/* ----  Unit Testing ---- */
 
 function handleUnitTests(){
-	if(unitTestsExecuted == false){
+    if(unitTestsExecuted == false){
         executeUnitTests();
         unitTestsExecuted = true;
     }
@@ -130,5 +148,3 @@ function executeUnitTests(){
         }
     });
 }
-
-

@@ -67,6 +67,11 @@
     <script>
         var unitTestsExecuted = false;
         var unitTestsVisible = false;
+
+        var cellClass = "cell";
+        var obstacleClass = "obstacle";
+        var robot1Class = "robot1";
+        var robot2Class = "robot2";
         $('#unit-test-button').click(function(){
             handleUnitTests();
         })
@@ -74,14 +79,14 @@
         $('#demo-button').click(function(){
             $(this).unbind('click');
             $(this).removeClass('info').addClass('disabled');
-            enableObstacles("cell");
+            enableObstacles();
             $(this).html("Done with obstacles. Set robots positions.");
             $(this).click(function(){
                 $(this).unbind('click');
                 $(this).removeClass('disabled').addClass('success');
                 $(this).html("Execute DEMO");
-                disableObstacles("cell");
-                enableRobotsPositions("cell", "black");
+                disableObstacles();
+                enableRobotsPositions();
                 $(this).click(function(){
                     $(this).unbind('click');
                     $(this).removeClass('success').addClass('alert');
