@@ -25,11 +25,12 @@ Language C
 To test the application :
 ```sh
 #Compile the application
-gcc C/src/robots.c robots			#executable also available from github as release
+mkdir C/bin
+gcc -o C/bin/robots C/src/robots.c			#executable also available from github as release
 #Test the application with sample inputs
-C/src/robots	C/input_files/input.txt
-C/src/robots 	C/input_files/input2.txt
-C/src/robots	C/input_files/input3.txt
+C/bin/robots	C/input_files/input.txt
+C/bin/robots 	C/input_files/input2.txt
+C/bin/robots	C/input_files/input3.txt
 ```
 
 Language Java
@@ -45,12 +46,12 @@ To test the application :
 #Compile the application
 javac Java/src/InvalidLetterException.java Java/src/BinaryMinHeap_PriorityQueue.java Java/src/SearchGraphNode.java Java/src/A_StarAlgorithm.java 
 #Test the application with sample inputs
-java -cp Java/src A_StarAlgorithm Java/input_files/small_1.txt
-java -cp Java/src A_StarAlgorithm Java/input_files/small_2.txt
-java -cp Java/src A_StarAlgorithm Java/input_files/medium_1.txt
-java -cp Java/src A_StarAlgorithm Java/input_files/medium_2.txt
-java -cp Java/src A_StarAlgorithm Java/input_files/medium_3.txt
-java -cp Java/src A_StarAlgorithm Java/input_files/medium_4.txt
-java -cp Java/src A_StarAlgorithm Java/input_files/medium_5.txt
-java -cp Java/src A_StarAlgorithm Java/input_files/large.txt
+java -cp Java/src/A_StarAlgorithm Java/input_files/small_1.txt
+java -cp Java/src/A_StarAlgorithm Java/input_files/small_2.txt
+java -cp Java/src/A_StarAlgorithm Java/input_files/medium_1.txt
+java -cp Java/src/A_StarAlgorithm Java/input_files/medium_2.txt
+java -cp Java/src/A_StarAlgorithm Java/input_files/medium_3.txt
+java -cp Java/src/A_StarAlgorithm Java/input_files/medium_4.txt
+java -cp Java/src/A_StarAlgorithm Java/input_files/medium_5.txt
+java -cp Java/src/A_StarAlgorithm Java/input_files/large.txt
 ```
