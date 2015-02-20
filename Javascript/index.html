@@ -63,6 +63,7 @@
         var unitTestsExecuted = false;
         var unitTestsVisible = false;
         var mapDimension = 24;
+        var robotsDefined = false;
 
         var map = createMap(mapDimension, "map", "cell");
 
@@ -86,15 +87,20 @@
                 $(this).removeClass('disabled').addClass('success');
                 $(this).html("Execute DEMO");
                 disableObstacles(map);
-                enableRobot1(map);
+                enableRobot1();
                 $(this).click(function(){
-                    $(this).unbind('click');
-                    $(this).removeClass('success').addClass('alert');
-                    $(this).html("Reset DEMO");
-                    executeAlgorithm();
-                    $(this).click(function(){
-                        location.reload();
-                    });
+                    if(robotsDefined){
+                        $(this).unbind('click');
+                        $(this).removeClass('success').addClass('alert');
+                        $(this).html("Reset DEMO");
+                        executeAlgorithm();
+                        $(this).click(function(){
+                            location.reload();
+                        });
+                    }
+                    else{
+                        alert("You must first define the positions of the 2 robots.")
+                    }
                 });
             });
         })

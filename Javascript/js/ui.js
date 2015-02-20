@@ -137,50 +137,27 @@ function disableObstacles(map){
 }
 
 
-function enableRobot1(map){
-    var node;
-    for(var i=0;i<map.getDimension();i++){
-        for(var j=0;j<map.getDimension();j++){
-            node = map.getNode(i,j);
-            if(!node.isObstacle()){
-                node.getCell().click(function(){
-                    setRobot1($(this));
-                    enableRobot2(map);
-                });
-            }
-        }
-    }
+function enableRobot1(){
     alert("You can set the positions of the 2 robots by clicking on a node.\n" +
             "If you click when having already defined the 2 robots, the oldest one will be reset.\n" +
             "When you have finished, press again the button to execute the DEMO.\n");
+    $('.cell').not('.obstacle').click(function(){
+        setRobot1($(this));
+        disableRobot();
+        enableRobot2();
+    });
 }
 
-function enableRobot2(map){
-    var node;
-    for(var i=0;i<map.getDimension();i++){
-        for(var j=0;j<map.getDimension();j++){
-            node = map.getNode(i,j);
-            node.getCell().unbind('click');
-            if(!node.isObstacle() && !node.isRobot1()){
-                node.getCell().one('click', function(){
-                    setRobot2($(this));
-                    disableRobots();
-                });
-            }
-        }
-    }
+function disableRobot(){
+    $('.cell').unbind('click');
 }
 
-function disableRobots(){
-    var node;
-    for(var i=0;i<map.getDimension();i++){
-        for(var j=0;j<map.getDimension();j++){
-            node = map.getNode(i,j);
-            if(!node.isObstacle()){
-                node.getCell().unbind('click');
-            }
-        }
-    }
+function enableRobot2(){
+    $('.cell').not('#robot1').not('.obstacle').click(function(){
+        setRobot2($(this));
+        robotsDefined = true;
+        disableRobot();
+    });
 }
 
 function executeAlgorithm(){
