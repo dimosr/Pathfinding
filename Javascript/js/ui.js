@@ -3,12 +3,62 @@
 var Node = function(row, column, DOMobject){
     this.row = row;
     this.column = column;
-    this.DOM = DOMobject;
+    this.cell = DOMobject;
 }
 
 var SquareMap = function(dimension){
     this.dimension = dimension;
     this.array = Create2DArray(dimension);
+}
+
+Node.prototype.getRow = function(){
+    return this.row;
+}
+
+Node.prototype.getColumn = function(){
+    return this.column;
+}
+
+Node.prototype.getCell = function(){
+    return this.cell;
+}
+
+Node.prototype.makeObstacle = function(){
+    $(this.cell).addClass("obstacle");
+}
+
+Node.prototype.isObstacle = function(){
+    return $(this.cell).hasClass("obstacle");
+}
+
+Node.prototype.isRobot1 = function(){
+    return $(this.cell).attr('id') == 'robot1';
+}
+
+Node.prototype.isRobot2 = function(){
+    return $(this.cell).attr('id') == 'robot2';
+}
+
+SquareMap.prototype.getDimension = function(){
+    return this.dimension;
+}
+
+SquareMap.prototype.getArray = function(){
+    return this.array;
+}
+
+SquareMap.prototype.getNode = function(i,j) {
+    return this.array[i][j];
+}
+
+SquareMap.prototype.getNode = function(i,j) {
+    return this.array[i][j];
+}
+
+/* A-star classes and methods */
+
+Node.prototype.isObstacle = function(){
+    return this.getCell().hasClass('obstacle');
 }
 
 /* Initialization of Map */
@@ -54,44 +104,87 @@ function createCellDiv(cellClass){
 
 /* ----  UI Workflow functions ---- */
 
-function enableObstacles(){
-    $('.' + cellClass).each(function(){
-        $(this).click(function(){
-            toggleObstacleState($(this));
-        });
+Node.prototype.enableObstacleToggle = function(){
+    this.getCell().click(function(){
+        $(this).toggleClass('obstacle');
     });
+}
+
+Node.prototype.disableObstacleToggle = function(){
+    this.getCell().unbind('click');
+}
+
+function enableObstacles(map){
+    var node;
+    for(var i=0;i<map.getDimension();i++){
+        for(var j=0;j<map.getDimension();j++){
+            map.getNode(i,j).enableObstacleToggle();
+        }
+    }
     alert("You can set the obstacles in the map by clicking on a node.\n" +
             "Grey nodes are free and black nodes are obstacles.\n" +
             "When you have finished, press again the button to proceed.\n");
 
 }
 
-function disableObstacles(){
-    $('.' + cellClass).each(function(){
-        $(this).unbind('click');
-    });
+function disableObstacles(map){
+    var node;
+    for(var i=0;i<map.getDimension();i++){
+        for(var j=0;j<map.getDimension();j++){
+            map.getNode(i,j).disableObstacleToggle();
+        }
+    }
 }
 
-function enableRobotsPositions(){
-    $('.' + cellClass).not('.' + obstacleClass).click(function(){
-        setRobot1($(this));
-        $('.' + cellClass).unbind('click');
-        $('.' + cellClass).not('.' + obstacleClass).not('.robot1').click(function(){
-            setRobot2($(this));
-            $('.' + cellClass).unbind('click');
-        });
-    });
+
+function enableRobot1(map){
+    var node;
+    for(var i=0;i<map.getDimension();i++){
+        for(var j=0;j<map.getDimension();j++){
+            node = map.getNode(i,j);
+            if(!node.isObstacle()){
+                node.getCell().click(function(){
+                    setRobot1($(this));
+                    enableRobot2(map);
+                });
+            }
+        }
+    }
     alert("You can set the positions of the 2 robots by clicking on a node.\n" +
             "If you click when having already defined the 2 robots, the oldest one will be reset.\n" +
             "When you have finished, press again the button to execute the DEMO.\n");
 }
 
-function executeAlgorithm(){
-    alert("Algorithm executed !");
+function enableRobot2(map){
+    var node;
+    for(var i=0;i<map.getDimension();i++){
+        for(var j=0;j<map.getDimension();j++){
+            node = map.getNode(i,j);
+            node.getCell().unbind('click');
+            if(!node.isObstacle() && !node.isRobot1()){
+                node.getCell().one('click', function(){
+                    setRobot2($(this));
+                    disableRobots();
+                });
+            }
+        }
+    }
 }
 
-function toggleObstacleState(obj){
-    obj.toggleClass("obstacle");
+function disableRobots(){
+    var node;
+    for(var i=0;i<map.getDimension();i++){
+        for(var j=0;j<map.getDimension();j++){
+            node = map.getNode(i,j);
+            if(!node.isObstacle()){
+                node.getCell().unbind('click');
+            }
+        }
+    }
+}
+
+function executeAlgorithm(){
+    alert("Algorithm executed !");
 }
 
 function setRobot1(obj){
@@ -100,33 +193,13 @@ function setRobot1(obj){
     obj.html("<img src='" + robot1Image + "'/>");
 }
 
-function getRobot1Position(){
-    var index = $( $('#' + robot1ID) ).index();
-    return transform1Dto2D(index, map_dimension);
-}
-
 function setRobot2(obj){
     robot2Image = "img/robot2.jpg"
     obj.attr('id', robot2ID);
     obj.html("<img src='" + robot2Image + "'/>");
 }
 
-function getRobot2Position(){
-    var index = $( $('#' + robot2ID) ).index();
-    return transform1Dto2D(index, map_dimension);
-}
-
 /* ----  Algorithm API functions ---- */
-
-function getCell(row, column){
-    var index_1D = transform2Dto1D(row, column, mapDimension);
-    return $( $('.' + cellClass).get( index_1D ) );
-}
-
-function setNodeExpanded(obj){
-    obj.removeClass( "red" ).addClass("green");
-}
-
 function transform2Dto1D(row, column, dimension){
     if( (row > (dimension-1)) || (column > (dimension-1)) ){
         throw new Error("Array out of Index");
@@ -150,19 +223,6 @@ function transform1Dto2D(index, dimension){
         return position;
     }
 }
-
-function isObstacle(obj){
-    return obj.hasClass(obstacleClass);
-}
-
-function isRobot1(obj){
-    obj.hasClass(robot1Class);
-}
-
-function isRobot2(obj){
-    obj.hasClass(robot2Class);
-}
-
 /* ----  Unit Testing ---- */
 
 function handleUnitTests(){

@@ -79,14 +79,14 @@
         $('#demo-button').click(function(){
             $(this).unbind('click');
             $(this).removeClass('info').addClass('disabled');
-            enableObstacles();
+            enableObstacles(map);
             $(this).html("Done with obstacles. Set robots positions.");
             $(this).click(function(){
                 $(this).unbind('click');
                 $(this).removeClass('disabled').addClass('success');
                 $(this).html("Execute DEMO");
-                disableObstacles();
-                enableRobotsPositions();
+                disableObstacles(map);
+                enableRobot1(map);
                 $(this).click(function(){
                     $(this).unbind('click');
                     $(this).removeClass('success').addClass('alert');
