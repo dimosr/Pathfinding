@@ -1,21 +1,55 @@
+/* Generic Classes */
+
+var Node = function(row, column, DOMobject){
+    this.row = row;
+    this.column = column;
+    this.DOM = DOMobject;
+}
+
+var SquareMap = function(dimension){
+    this.dimension = dimension;
+    this.array = Create2DArray(dimension);
+}
+
 /* Initialization of Map */
 
-function createSquareMap(mapDimension, containerID){
+function createMap(dimension, containerID, cellsClass){
+    
+    var map = new SquareMap(dimension);
+    var mockCell = createCellDiv(cellsClass);
 
-    var div = $('<div>', {class: 'cell'});
-    div = div.width('30px');
-    div = div.height( '30px' );
-
-    for(var i = 0; i < mapDimension; i++){
-        for(var j = 0; j < mapDimension; j++){
+    for(var i = 0; i < dimension; i++){
+        for(var j = 0; j < dimension; j++){
             if(j==0){
-                var cell = $( "#" + containerID ).append( div.clone().css('clear', 'left') );
+                var cell = mockCell.clone().css('clear', 'left'); 
             }
             else{
-                var cell = $( "#" + containerID ).append( div.clone() );
+                var cell = mockCell.clone()
             }
+            var node = new Node(i, j, cell);
+            var cell = $( "#" + containerID ).append( cell );
+            map.array[i][j] = node;
         }
     }
+    return map;
+}
+
+function Create2DArray(dimension) {
+    var arr = new Array();
+    for (i=0;i<dimension;i++) {
+        arr[i]=new Array();
+        for (j=0;j<dimension;j++) {
+            arr[i][j]=null;
+        }
+    }
+    return arr;
+}
+
+function createCellDiv(cellClass){
+    var div = $('<div>', {class: cellClass});
+    div = div.width('30px');
+    div = div.height( '30px' );
+    return div;
 }
 
 /* ----  UI Workflow functions ---- */
@@ -84,7 +118,7 @@ function getRobot2Position(){
 
 /* ----  Algorithm API functions ---- */
 
-function getCell(row, column, mapDimension){
+function getCell(row, column){
     var index_1D = transform2Dto1D(row, column, mapDimension);
     return $( $('.' + cellClass).get( index_1D ) );
 }
