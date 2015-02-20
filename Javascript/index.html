@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="css/custom-qunit.css">
     <script src="js/qunit.js"></script>
 
-    <script src="js/app.js"></script>
+    <script src="js/A*-algorithm.js"></script>
     <script src="js/ui.js"></script>
     <title>A* algorithm Demo</title>
 </head>
@@ -52,11 +52,6 @@
 
     </div>
 
-    <script>
-        createSquareMap(24, "map");
-
-        $(document).foundation();
-    </script>
 
     <div id="button-container" class="row fullWidth">
         <div id="unit-test-button" class="button success">Enable Unit Tests</div>
@@ -67,11 +62,17 @@
     <script>
         var unitTestsExecuted = false;
         var unitTestsVisible = false;
+        var mapDimension = 24;
+
+
+        createSquareMap(map_dimension, "map");
+
+        $(document).foundation();
 
         var cellClass = "cell";
         var obstacleClass = "obstacle";
-        var robot1Class = "robot1";
-        var robot2Class = "robot2";
+        var robot1ID = "robot1";
+        var robot2ID = "robot2";
         $('#unit-test-button').click(function(){
             handleUnitTests();
         })

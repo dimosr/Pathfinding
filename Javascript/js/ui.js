@@ -62,14 +62,24 @@ function toggleObstacleState(obj){
 
 function setRobot1(obj){
     robot1Image = "img/robot1.gif"
-    obj.addClass(robot1Class);
+    obj.attr('id', robot1ID);
     obj.html("<img src='" + robot1Image + "'/>");
+}
+
+function getRobot1Position(){
+    var index = $( $('#' + robot1ID) ).index();
+    return transform1Dto2D(index, map_dimension);
 }
 
 function setRobot2(obj){
     robot2Image = "img/robot2.jpg"
-    obj.addClass(robot2Class);
+    obj.attr('id', robot2ID);
     obj.html("<img src='" + robot2Image + "'/>");
+}
+
+function getRobot2Position(){
+    var index = $( $('#' + robot2ID) ).index();
+    return transform1Dto2D(index, map_dimension);
 }
 
 /* ----  Algorithm API functions ---- */
@@ -89,6 +99,21 @@ function transform2Dto1D(row, column, dimension){
     }
     else{
         return (row*dimension + column);
+    }
+}
+
+function transform1Dto2D(index, dimension){
+    if( (index < 0) || (index > (Math.pow(dimension,2)-1) ) ){
+        throw new Error("Array out of Index");
+    }
+    else{
+        var row = Math.floor(index/dimension);
+        var column = index % dimension;
+        var position = {
+            "row" : row,
+            "column" : column
+        };
+        return position;
     }
 }
 
@@ -133,15 +158,26 @@ function handleUnitTests(){
 
 function executeUnitTests(){
 
-    QUnit.test( "hello test", function( assert ) {
-            assert.ok( 1 == "1", "Passed!" );
-    });
-
     QUnit.test("2D to 1D transformations", function( assert) {
         var value = transform2Dto1D(1,4,8);
         assert.ok(value, 12, "Passed!");
         try{
             var value = transform2Dto1D(8,4,8);
+        }
+        catch(err){
+            assert.ok(value, "Array out of Index", "Passed!");
+        }
+    });
+
+    QUnit.test("1D to 2D transformations", function( assert) {
+        var value = transform1Dto2D(19,8);
+        var position ={
+            "row" : 2,
+            "column" : 3
+        }
+        assert.deepEqual(value, position, "Passed!");
+        try{
+            var value = transform1Dto2D(64,8);
         }
         catch(err){
             assert.ok(value, "Array out of Index", "Passed!");
