@@ -190,11 +190,17 @@ function disableRobot(){
     $('.cell').unbind('click');
 }
 
+function setRobotsCoordinates(){
+    robot1Coordinate = transform1Dto2D($('#robot1').index(), map.getDimension());
+    robot2Coordinate = transform1Dto2D($('#robot2').index(), map.getDimension());
+}
+
 function enableRobot2(){
     $('.cell').not('#robot1').not('.obstacle').click(function(){
         setRobot2($(this));
         robotsDefined = true;
         disableRobot();
+        setRobotsCoordinates();
     });
 }
 
@@ -215,12 +221,12 @@ function setRobot2(obj){
 }
 
 /* ----  Algorithm API functions ---- */
-function transform2Dto1D(row, column, dimension){
-    if( (row > (dimension-1)) || (column > (dimension-1)) ){
+function transform2Dto1D(coordinate, dimension){
+    if( (coordinate.getRow() > (dimension-1)) || (coordinate.getColumn() > (dimension-1)) ){
         throw new Error("Array out of Index");
     }
     else{
-        return (row*dimension + column);
+        return (coordinate.getRow()*dimension + coordinate.getColumn());
     }
 }
 
@@ -231,11 +237,7 @@ function transform1Dto2D(index, dimension){
     else{
         var row = Math.floor(index/dimension);
         var column = index % dimension;
-        var position = {
-            "row" : row,
-            "column" : column
-        };
-        return position;
+        return new Coordinate(row, column);
     }
 }
 /* ----  Unit Testing ---- */
@@ -263,48 +265,4 @@ function handleUnitTests(){
         $('#unit-test-button').html("Enable Unit Tests");
     }
     $('#unit-test-button').toggleClass("success").toggleClass("alert");
-}
-
-function executeUnitTests(){
-
-    QUnit.test("2D to 1D transformations", function( assert) {
-        var value = transform2Dto1D(1,4,8);
-        assert.ok(value, 12, "Passed!");
-        try{
-            var value = transform2Dto1D(8,4,8);
-        }
-        catch(err){
-            assert.ok(value, "Array out of Index", "Passed!");
-        }
-    });
-
-    QUnit.test("1D to 2D transformations", function( assert) {
-        var value = transform1Dto2D(19,8);
-        var position ={
-            "row" : 2,
-            "column" : 3
-        }
-        assert.deepEqual(value, position, "Passed!");
-        try{
-            var value = transform1Dto2D(64,8);
-        }
-        catch(err){
-            assert.ok(value, "Array out of Index", "Passed!");
-        }
-    });
-
-    QUnit.test("Node functionalities", function( assert) {
-        var node = new Node(new Coordinate(3,4),null);
-        assert.equal(node.getCoordinate().getRow(), 3, "Passed!");
-        assert.equal(node.getCoordinate().getColumn(), 4, "Passed!");
-        assert.equal(node.getCell(), null, "Passed");
-    });
-
-    QUnit.test("Square Map functionalities", function( assert) {
-        var mockCell = createCellDiv("test");
-        var map = new SquareMap(10);
-        var node = new Node(new Coordinate(2,3),mockCell);
-        map.setNode(new Coordinate(2,3),node);
-        assert.deepEqual(map.getNode(new Coordinate(2,3)).getCell(), mockCell, "Passed!");
-    });
 }

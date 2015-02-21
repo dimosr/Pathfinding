@@ -19,6 +19,7 @@
 
     <script src="js/ui.js"></script>
     <script src="js/A*-algorithm.js"></script>
+    <script src="js/unit-tests.js"></script>
     <title>A* algorithm Demo</title>
 </head>
 
@@ -73,6 +74,7 @@
         var obstacleClass = "obstacle";
         var robot1ID = "robot1";
         var robot2ID = "robot2";
+        var robot1Coordinate, robot2Coordinate;
         $('#unit-test-button').click(function(){
             handleUnitTests();
         })
@@ -93,7 +95,7 @@
                         $(this).unbind('click');
                         $(this).removeClass('success').addClass('alert');
                         $(this).html("Reset DEMO");
-                        executeAStarAlgorithm();
+                        //map.executeAStarAlgorithm(robot1Coordinate, robot2Coordinate);
                         $(this).click(function(){
                             location.reload();
                         });
