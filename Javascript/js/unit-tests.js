@@ -37,4 +37,10 @@ function executeUnitTests(){
         map.setNode(new Coordinate(2,3),node);
         assert.deepEqual(map.getNode(new Coordinate(2,3)).getCell(), mockCell, "Passed!");
     });
+
+    QUnit.test("Euclidean Heuristic", function( assert) {
+        var from = new Coordinate(2,7);
+        var to = new Coordinate(1,3);
+        assert.equal(heuristicCost(from,to),Math.sqrt(17), "Passed!");
+    });
 }

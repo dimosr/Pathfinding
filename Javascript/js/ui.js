@@ -13,12 +13,21 @@ Coordinate.prototype.getColumn = function(){
     return this.column;
 }
 
+Coordinate.prototype.equals = function(coordinate){
+    if( (this.getRow() == coordinate.getRow()) && (this.getColumn() == coordinate.getColumn()) ){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+
 var Node = function(coordinate, DOMobject){
     this.coordinate = coordinate
     this.cell = DOMobject;
     this.predecessor = null;
-    this.gScore = null;
-    this.fScore = null;
+    this.gCost = null;
+    this.fCost = null;
 }
 
 var SquareMap = function(dimension){
@@ -34,21 +43,21 @@ Node.prototype.getCell = function(){
     return this.cell;
 }
 
-Node.prototype.getGScore = function(){
-    return this.gScore;
+Node.prototype.getGCost = function(){
+    return this.gCost;
 }
 
-Node.prototype.setGScore = function(gScore){
-    this.gScore = gScore;
+Node.prototype.setGCost = function(gCost){
+    this.gScore = gCost;
 }
 
 
-Node.prototype.getFScore = function(){
-    return this.fScore;
+Node.prototype.getFCost = function(){
+    return this.fCost;
 }
 
-Node.prototype.setFScore = function(fScore){
-    this.fScore = fScore;
+Node.prototype.setFCost = function(fCost){
+    this.fScore = fCost;
 }
 
 Node.prototype.getPredecessor = function(){
