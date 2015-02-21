@@ -1,9 +1,24 @@
 /* Generic Classes */
 
-var Node = function(row, column, DOMobject){
+var Coordinate = function(row, column){
     this.row = row;
     this.column = column;
+}
+
+Coordinate.prototype.getRow = function(){
+    return this.row;
+}
+
+Coordinate.prototype.getColumn = function(){
+    return this.column;
+}
+
+var Node = function(coordinate, DOMobject){
+    this.coordinate = coordinate
     this.cell = DOMobject;
+    this.predecessor = null;
+    this.gScore = null;
+    this.fScore = null;
 }
 
 var SquareMap = function(dimension){
@@ -11,17 +26,40 @@ var SquareMap = function(dimension){
     this.array = Create2DArray(dimension);
 }
 
-Node.prototype.getRow = function(){
-    return this.row;
-}
-
-Node.prototype.getColumn = function(){
-    return this.column;
+Node.prototype.getCoordinate = function(){
+    return this.coordinate;
 }
 
 Node.prototype.getCell = function(){
     return this.cell;
 }
+
+Node.prototype.getGScore = function(){
+    return this.gScore;
+}
+
+Node.prototype.setGScore = function(gScore){
+    this.gScore = gScore;
+}
+
+
+Node.prototype.getFScore = function(){
+    return this.fScore;
+}
+
+Node.prototype.setFScore = function(fScore){
+    this.fScore = fScore;
+}
+
+Node.prototype.getPredecessor = function(){
+    return this.predecessor;
+}
+
+Node.prototype.setPredecessor = function(predecessor){
+    this.predecessor = predecessor;
+}
+
+
 
 Node.prototype.makeObstacle = function(){
     $(this.cell).addClass("obstacle");
@@ -47,12 +85,12 @@ SquareMap.prototype.getArray = function(){
     return this.array;
 }
 
-SquareMap.prototype.getNode = function(i,j) {
-    return this.array[i][j];
+SquareMap.prototype.getNode = function(coordinate) {
+    return this.array[coordinate.getRow()][coordinate.getColumn()];
 }
 
-SquareMap.prototype.setNode = function(i,j,node) {
-    this.array[i][j] = node;
+SquareMap.prototype.setNode = function(coordinate,node) {
+    this.array[coordinate.getRow()][coordinate.getColumn()] = node;
 }
 
 /* A-star classes and methods */
@@ -76,7 +114,7 @@ function createMap(dimension, containerID, cellsClass){
             else{
                 var cell = mockCell.clone()
             }
-            var node = new Node(i, j, cell);
+            var node = new Node(new Coordinate(i,j), cell);
             var cell = $( "#" + containerID ).append( cell );
             map.array[i][j] = node;
         }
@@ -118,7 +156,7 @@ function enableObstacles(map){
     var node;
     for(var i=0;i<map.getDimension();i++){
         for(var j=0;j<map.getDimension();j++){
-            map.getNode(i,j).enableObstacleToggle();
+            map.getNode(new Coordinate(i,j)).enableObstacleToggle();
         }
     }
     alert("You can set the obstacles in the map by clicking on a node.\n" +
@@ -131,7 +169,7 @@ function disableObstacles(map){
     var node;
     for(var i=0;i<map.getDimension();i++){
         for(var j=0;j<map.getDimension();j++){
-            map.getNode(i,j).disableObstacleToggle();
+            map.getNode(new Coordinate(i,j)).disableObstacleToggle();
         }
     }
 }
@@ -256,17 +294,17 @@ function executeUnitTests(){
     });
 
     QUnit.test("Node functionalities", function( assert) {
-        var node = new Node(3,4,null);
-        assert.equal(node.getRow(), 3, "Passed!");
-        assert.equal(node.getColumn(), 4, "Passed!");
+        var node = new Node(new Coordinate(3,4),null);
+        assert.equal(node.getCoordinate().getRow(), 3, "Passed!");
+        assert.equal(node.getCoordinate().getColumn(), 4, "Passed!");
         assert.equal(node.getCell(), null, "Passed");
     });
 
     QUnit.test("Square Map functionalities", function( assert) {
         var mockCell = createCellDiv("test");
         var map = new SquareMap(10);
-        var node = new Node(2,3,mockCell);
-        map.setNode(2,3,node);
-        assert.deepEqual(map.getNode(2,3).getCell(), mockCell, "Passed!");
+        var node = new Node(new Coordinate(2,3),mockCell);
+        map.setNode(new Coordinate(2,3),node);
+        assert.deepEqual(map.getNode(new Coordinate(2,3)).getCell(), mockCell, "Passed!");
     });
 }

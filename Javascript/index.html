@@ -17,8 +17,8 @@
     <link rel="stylesheet" href="css/custom-qunit.css">
     <script src="js/qunit.js"></script>
 
-    <script src="js/A*-algorithm.js"></script>
     <script src="js/ui.js"></script>
+    <script src="js/A*-algorithm.js"></script>
     <title>A* algorithm Demo</title>
 </head>
 
@@ -93,7 +93,7 @@
                         $(this).unbind('click');
                         $(this).removeClass('success').addClass('alert');
                         $(this).html("Reset DEMO");
-                        executeAlgorithm();
+                        executeAStarAlgorithm();
                         $(this).click(function(){
                             location.reload();
                         });
