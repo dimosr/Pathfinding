@@ -51,8 +51,8 @@ SquareMap.prototype.getNode = function(i,j) {
     return this.array[i][j];
 }
 
-SquareMap.prototype.getNode = function(i,j) {
-    return this.array[i][j];
+SquareMap.prototype.setNode = function(i,j,node) {
+    this.array[i][j] = node;
 }
 
 /* A-star classes and methods */
@@ -253,5 +253,20 @@ function executeUnitTests(){
         catch(err){
             assert.ok(value, "Array out of Index", "Passed!");
         }
+    });
+
+    QUnit.test("Node functionalities", function( assert) {
+        var node = new Node(3,4,null);
+        assert.equal(node.getRow(), 3, "Passed!");
+        assert.equal(node.getColumn(), 4, "Passed!");
+        assert.equal(node.getCell(), null, "Passed");
+    });
+
+    QUnit.test("Square Map functionalities", function( assert) {
+        var mockCell = createCellDiv("test");
+        var map = new SquareMap(10);
+        var node = new Node(2,3,mockCell);
+        map.setNode(2,3,node);
+        assert.deepEqual(map.getNode(2,3).getCell(), mockCell, "Passed!");
     });
 }
