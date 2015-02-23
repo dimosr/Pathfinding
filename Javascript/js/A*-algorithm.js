@@ -79,25 +79,17 @@ SquareMap.prototype.getNeighbours = function(node){
     var dimension = this.getDimension();
     var existingCoordinates = new Set();
     var neighbours = new Set();
-    if( (currentRow+1) <= dimension){
+    if( (currentRow+1) < dimension){
         existingCoordinates.add( new Coordinate(currentRow+1,currentColumn) );
-        if( (currentColumn - 1) >= 0 ){
-            existingCoordinates.add( new Coordinate(currentRow+1,currentColumn-1) );
-            existingCoordinates.add( new Coordinate(currentRow,currentColumn-1) );
-        }
-        if( (currentColumn + 1) < dimension){
-            existingCoordinates.add( new Coordinate(currentRow+1,currentColumn+1) );
-            existingCoordinates.add( new Coordinate(currentRow,currentColumn+1) );
-        }
     }
     if( (currentRow-1) >= 0 ){
         existingCoordinates.add( new Coordinate(currentRow-1,currentColumn) );
-        if( (currentColumn - 1) >= 0 ){
-            existingCoordinates.add( new Coordinate(currentRow-1,currentColumn-1) );
-        }
-        if( (currentColumn + 1) < dimension){
-            existingCoordinates.add( new Coordinate(currentRow-1,currentColumn+1) );
-        }
+    }
+    if( (currentColumn+1) < dimension){
+        existingCoordinates.add( new Coordinate(currentRow,currentColumn+1) );
+    }
+    if( (currentColumn-1) >= 0 ){
+        existingCoordinates.add( new Coordinate(currentRow,currentColumn-1) );
     }
     existingCoordinates.each(function(coordinate){
         var currentNode = map.getNode(coordinate);
