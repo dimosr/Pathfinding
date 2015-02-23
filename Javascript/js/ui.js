@@ -57,7 +57,7 @@ Node.prototype.getFCost = function(){
 }
 
 Node.prototype.setFCost = function(fCost){
-    this.fScore = fCost;
+    this.fCost = fCost;
 }
 
 Node.prototype.getPredecessor = function(){
@@ -68,7 +68,9 @@ Node.prototype.setPredecessor = function(predecessor){
     this.predecessor = predecessor;
 }
 
-
+Node.prototype.setInPath = function(){
+    this.getCell().addClass("green");
+}
 
 Node.prototype.makeObstacle = function(){
     $(this.cell).addClass("obstacle");

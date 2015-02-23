@@ -1,38 +1,48 @@
 SquareMap.prototype.executeAStarAlgorithm = function (start, target){
     var closedNodes = new Set();    //already evaluated
     var openNodes = new Set();     //to be evaluated
-    var currentNode, neighbourNodes, tentativeCost
+    var currentNode, neighbourNodes, tentativeCost;
 
-    startNode = map.getNode(start.getRow(), start.getColumn());
+    startNode = map.getNode(start);
     openNodes.add(startNode);
 
     startNode.setGCost(0);
     startNode.setFCost(0 + heuristicCost(start, target)) ;
 
-    while(openNodes.size > 0){
+    console.log('openNodes');
+    console.log(openNodes);
+    while(openNodes.size() > 0){
         currentNode = getOptimum(openNodes);
+        console.log('currentNode');
+        console.log(currentNode);
+        if(!currentNode){
+            alert("no path");
+            return false;
+        }
         if( currentNode.getCoordinate().equals(target) ){
             reconstructPath(currentNode);
             return true;    //path found
         }
 
-        openNodes.delete(currentNode);
+        openNodes.remove(currentNode);
         closedNodes.add(currentNode);
         neighbourNodes = this.getNeighbours(currentNode);
-        neighbourNodes.forEach(function(neighbour){
-            if( !closedNodes.has(neighbour) ){
+        console.log('neighbourNodes');
+        console.log(neighbourNodes);
+        neighbourNodes.each(function(neighbour){
+            if( !closedNodes.contains(neighbour) ){
                 tentativeCost = currentNode.getGCost() + heuristicCost(currentNode.getCoordinate() ,neighbour.getCoordinate());
-                if( (tentativeCost < neighbour.getGCost()) || (!openNodes.has(neighbour)) ){
+                if( (tentativeCost < neighbour.getGCost()) || (!openNodes.contains(neighbour)) ){
                     neighbour.setPredecessor(currentNode);
                     neighbour.setGCost(tentativeCost);
                     neighbour.setFCost(neighbour.getGCost() + heuristicCost(neighbour.getCoordinate(),target) );
-                    if(!openNodes.has(neighbour)){
+                    if(!openNodes.contains(neighbour)){
                         openNodes.add(neighbour);
                     }
                 }
             }
         })
-    }*/
+    }
     return false;       //no possible path
 }
 
@@ -47,27 +57,56 @@ function heuristicCost(from, to){
 function getOptimum(nodes){
     var minimumFCost;
     var minNode;
-    nodes.forEach(function(node){
-        if( (minNode === "undefined") || (node.getFCost() < minimumFCost ) ){
-            minimumFCost = node.getFCost() ;
-            minNode = node;
-        }
-    });
-    nodes.delete(minNode);
+    if(nodes.size() == 0){
+        alert("zero size");
+        return null;
+    }
+    else{
+        nodes.each(function(node){
+            if( (!minNode) || (node.getFCost() < minimumFCost ) ){
+                minimumFCost = node.getFCost() ;
+                minNode = node;
+            }
+        });
+    }
+    nodes.remove(minNode);
     return minNode;
 }
 
 SquareMap.prototype.getNeighbours = function(node){
+    var currentRow = node.getCoordinate().getRow();
+    var currentColumn = node.getCoordinate().getColumn();
+    var dimension = this.getDimension();
+    var existingCoordinates = new Set();
     var neighbours = new Set();
-    if(node.getCoordinate().getRow()+1 <= map.getDimension())
-        neighbours.add( this.getNode(node.getCoordinate().getRow()+1,node.getCoordinate().getColumn()) );
-    if(node.getCoordinate().getColumn()+1 <= map.getDimension())
-        neighbours.add( this.getNode(node.getCoordinate().getRow(),node.getCoordinate().getColumn()+1) );
-    if(node.getCoordinate().getRow()-1 >= 0)
-        neighbours.add( this.getNode(node.getCoordinate().getRow()-1,node.getCoordinate().getColumn()) );
-    if(node.getCoordinate().getColumn()-1 >= 0)
-        neighbours.add( this.getNode(node.getCoordinate().getRow(),node.getCoordinate().getColumn()-1) );
-    return neighbours
+    if( (currentRow+1) <= dimension){
+        existingCoordinates.add( new Coordinate(currentRow+1,currentColumn) );
+        if( (currentColumn - 1) >= 0 ){
+            existingCoordinates.add( new Coordinate(currentRow+1,currentColumn-1) );
+            existingCoordinates.add( new Coordinate(currentRow,currentColumn-1) );
+        }
+        if( (currentColumn + 1) < dimension){
+            existingCoordinates.add( new Coordinate(currentRow+1,currentColumn+1) );
+            existingCoordinates.add( new Coordinate(currentRow,currentColumn+1) );
+        }
+    }
+    if( (currentRow-1) >= 0 ){
+        existingCoordinates.add( new Coordinate(currentRow-1,currentColumn) );
+        if( (currentColumn - 1) >= 0 ){
+            existingCoordinates.add( new Coordinate(currentRow-1,currentColumn-1) );
+        }
+        if( (currentColumn + 1) < dimension){
+            existingCoordinates.add( new Coordinate(currentRow-1,currentColumn+1) );
+        }
+    }
+    existingCoordinates.each(function(coordinate){
+        var currentNode = map.getNode(coordinate);
+        if( !currentNode.isObstacle() ){
+            neighbours.add(currentNode);
+        }
+    });
+    console.log(neighbours);
+    return neighbours;
 }
 
 function reconstructPath(finalNode){
@@ -76,11 +115,12 @@ function reconstructPath(finalNode){
     path.push(finalNode);
     var predecessor = current.getPredecessor();
     while(predecessor != null){
+        predecessor.setInPath();
         path.push(predecessor);
         current = predecessor;
         predecessor = current.getPredecessor();
     }
     var reversed = path.reverse();
-    alert(reversed);
+    console.log(reversed);
     return reversed;
 }
