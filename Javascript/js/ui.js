@@ -69,7 +69,15 @@ Node.prototype.setPredecessor = function(predecessor){
 }
 
 Node.prototype.setInPath = function(){
-    this.getCell().addClass("green");
+    this.getCell().removeClass("closed").addClass("in-path");
+}
+
+Node.prototype.setOpen = function(){
+    this.getCell().addClass("open");
+}
+
+Node.prototype.setClosed = function(){
+    this.getCell().removeClass("open").addClass("closed");
 }
 
 Node.prototype.makeObstacle = function(){

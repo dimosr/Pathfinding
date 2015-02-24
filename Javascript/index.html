@@ -96,7 +96,7 @@
                         $(this).unbind('click');
                         $(this).removeClass('success').addClass('alert');
                         $(this).html("Reset DEMO");
-                        map.executeAStarAlgorithm(robot1Coordinate, robot2Coordinate);
+                        map.executeAStarAlgorithmRecursive(robot1Coordinate, robot2Coordinate);
                         $(this).click(function(){
                             location.reload();
                         });

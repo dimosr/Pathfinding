@@ -47,12 +47,16 @@
     margin-top:30px;
 }
 
-.green{
-    background-color: green;
+.in-path{
+    background-color: #338A2E;
 }
 
-.red{
-    background-color: red;
+.open{
+    background-color: #FFF6AA;
+}
+
+.closed{
+    background-color: #033D53;
 }
 
 .obstacle{
