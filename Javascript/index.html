@@ -89,6 +89,10 @@
                 $(this).unbind('click');
                 $(this).removeClass('disabled').addClass('success');
                 $(this).html("Execute DEMO");
+                $('#demo-button').after("<select id='algorithm'>" +
+                                        "<option value='A_star'>A* star algorithm</option>" +
+                                        "<option value='bfs'>Breadth First Search (BFS)</option>" +
+                                        "</select>");
                 disableObstacles(map);
                 enableRobot1();
                 $(this).click(function(){
@@ -96,7 +100,7 @@
                         $(this).unbind('click');
                         $(this).removeClass('success').addClass('alert');
                         $(this).html("Reset DEMO");
-                        map.executeAStarAlgorithmRecursive(robot1Coordinate, robot2Coordinate);
+                        dispatchPathfindingAlgorithm($('#algorithm').val());
                         $(this).click(function(){
                             location.reload();
                         });
@@ -107,6 +111,15 @@
                 });
             });
         })
+
+        function dispatchPathfindingAlgorithm(algorithmName){
+            if(algorithmName == "A_star"){
+                map.executeAStarAlgorithmRecursive(robot1Coordinate, robot2Coordinate);
+            }
+            else if(algorithmName == "bfs"){
+                map.executeBFS(robot1Coordinate, robot2Coordinate);
+            }
+        }
     </script>
 </body>
 </html>
