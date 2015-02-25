@@ -1,5 +1,4 @@
 SquareMap.prototype.executeAStarAlgorithm = function (start, target){
-    var closedNodes = new Set();    //already evaluated
     var openNodes = new Set();     //to be evaluated
     var currentNode, neighbourNodes, tentativeCost;
 
@@ -21,11 +20,10 @@ SquareMap.prototype.executeAStarAlgorithm = function (start, target){
         }
 
         openNodes.remove(currentNode);
-        closedNodes.add(currentNode);
         currentNode.setClosed();
         neighbourNodes = this.getNeighbours(currentNode);
         neighbourNodes.each(function(neighbour){
-            if( !closedNodes.contains(neighbour) ){
+            if( !neighbour.isClosed() ){
                 tentativeCost = currentNode.getGCost() + heuristicCost(currentNode.getCoordinate() ,neighbour.getCoordinate());
                 if( (tentativeCost < neighbour.getGCost()) || (!openNodes.contains(neighbour)) ){
                     neighbour.setPredecessor(currentNode);
@@ -33,7 +31,7 @@ SquareMap.prototype.executeAStarAlgorithm = function (start, target){
                     neighbour.setFCost(neighbour.getGCost() + heuristicCost(neighbour.getCoordinate(),target) );
                     if(!openNodes.contains(neighbour)){
                         openNodes.add(neighbour);
-                            neighbour.setOpen();
+                        neighbour.setOpen();
                     }
                 }
             }
@@ -69,52 +67,7 @@ function getOptimum(nodes){
     return minNode;
 }
 
-SquareMap.prototype.getNeighbours = function(node){
-    var currentRow = node.getCoordinate().getRow();
-    var currentColumn = node.getCoordinate().getColumn();
-    var dimension = this.getDimension();
-    var existingCoordinates = new Set();
-    var neighbours = new Set();
-    if( (currentRow+1) < dimension){
-        existingCoordinates.add( new Coordinate(currentRow+1,currentColumn) );
-    }
-    if( (currentRow-1) >= 0 ){
-        existingCoordinates.add( new Coordinate(currentRow-1,currentColumn) );
-    }
-    if( (currentColumn+1) < dimension){
-        existingCoordinates.add( new Coordinate(currentRow,currentColumn+1) );
-    }
-    if( (currentColumn-1) >= 0 ){
-        existingCoordinates.add( new Coordinate(currentRow,currentColumn-1) );
-    }
-    existingCoordinates.each(function(coordinate){
-        var currentNode = map.getNode(coordinate);
-        if( !currentNode.isObstacle() ){
-            neighbours.add(currentNode);
-        }
-    });
-    return neighbours;
-}
-
-function reconstructPath(finalNode){
-    var path = new Array();
-    var current = finalNode;
-    path.push(finalNode);
-    var predecessor = current.getPredecessor();
-    while(predecessor != null){
-        predecessor.setInPath();
-        path.push(predecessor);
-        current = predecessor;
-        predecessor = current.getPredecessor();
-    }
-    var reversed = path.reverse();
-    return reversed;
-}
-
-var delay = 300;
-
-SquareMap.prototype.executeAStarAlgorithmRecursive = function (start, target){
-    var closedNodes = new Set();    //already evaluated
+SquareMap.prototype.executeAStarAlgorithmRecursive = function (start, target, delay){
     var openNodes = new Set();     //to be evaluated
     var currentNode, neighbourNodes, tentativeCost;
     var pathExists = true;
@@ -127,13 +80,13 @@ SquareMap.prototype.executeAStarAlgorithmRecursive = function (start, target){
     startNode.setFCost(0 + heuristicCost(start, target)) ;
 
     setTimeout(function(){
-        map.executeAlgorithmStep(pathExists, openNodes, closedNodes, target);
+        map.executeAStarStep(pathExists, openNodes, target, delay);
     }, delay);
 
 
 }
 
-SquareMap.prototype.executeAlgorithmStep = function(solutionFound, openSet, closedSet, target){
+SquareMap.prototype.executeAStarStep = function(solutionFound, openSet, target, delay){
     var currentNode = getOptimum(openSet);
     if(!currentNode){
         solutionFound = false;
@@ -145,11 +98,10 @@ SquareMap.prototype.executeAlgorithmStep = function(solutionFound, openSet, clos
     }
 
     openSet.remove(currentNode);
-    closedSet.add(currentNode);
     currentNode.setClosed();
     neighbourNodes = this.getNeighbours(currentNode);
     neighbourNodes.each(function(neighbour){
-        if( !closedSet.contains(neighbour) ){
+        if( !neighbour.isClosed() ){
             tentativeCost = currentNode.getGCost() + heuristicCost(currentNode.getCoordinate() ,neighbour.getCoordinate());
             if( (tentativeCost < neighbour.getGCost()) || (!openSet.contains(neighbour)) ){
                 neighbour.setPredecessor(currentNode);
@@ -163,7 +115,7 @@ SquareMap.prototype.executeAlgorithmStep = function(solutionFound, openSet, clos
         }
     })
     setTimeout(function(){
-        map.executeAlgorithmStep(solutionFound, openSet, closedSet, target);
+        map.executeAStarStep(solutionFound, openSet, target, delay);
     }, delay);
 
 }

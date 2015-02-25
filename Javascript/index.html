@@ -17,9 +17,10 @@
     <link rel="stylesheet" href="css/custom-qunit.css">
     <script src="js/qunit.js"></script>
 
-    <script src="js/set.js"></script>
+    <script src="js/util.js"></script>
     <script src="js/ui.js"></script>
     <script src="js/A*-algorithm.js"></script>
+    <script src="js/BFS.js"></script>
     <script src="js/unit-tests.js"></script>
     <title>A* algorithm Demo</title>
 </head>
@@ -66,6 +67,7 @@
         var unitTestsVisible = false;
         var mapDimension = 24;
         var robotsDefined = false;
+        var delay = 300;
 
         var map = createMap(mapDimension, "map", "cell");
 
@@ -114,10 +116,10 @@
 
         function dispatchPathfindingAlgorithm(algorithmName){
             if(algorithmName == "A_star"){
-                map.executeAStarAlgorithmRecursive(robot1Coordinate, robot2Coordinate);
+                map.executeAStarAlgorithmRecursive(robot1Coordinate, robot2Coordinate, delay);
             }
             else if(algorithmName == "bfs"){
-                map.executeBFS(robot1Coordinate, robot2Coordinate);
+                map.executeBFSRecursive(robot1Coordinate, robot2Coordinate, delay/4);
             }
         }
     </script>

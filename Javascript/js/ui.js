@@ -76,8 +76,16 @@ Node.prototype.setOpen = function(){
     this.getCell().addClass("open");
 }
 
+Node.prototype.isOpen = function(){
+    return this.getCell().hasClass("open");
+}
+
 Node.prototype.setClosed = function(){
     this.getCell().removeClass("open").addClass("closed");
+}
+
+Node.prototype.isClosed = function(){
+    return this.getCell().hasClass("closed");
 }
 
 Node.prototype.makeObstacle = function(){
@@ -110,6 +118,33 @@ SquareMap.prototype.getNode = function(coordinate) {
 
 SquareMap.prototype.setNode = function(coordinate,node) {
     this.array[coordinate.getRow()][coordinate.getColumn()] = node;
+}
+
+SquareMap.prototype.getNeighbours = function(node){
+    var currentRow = node.getCoordinate().getRow();
+    var currentColumn = node.getCoordinate().getColumn();
+    var dimension = this.getDimension();
+    var existingCoordinates = new Set();
+    var neighbours = new Set();
+    if( (currentRow+1) < dimension){
+        existingCoordinates.add( new Coordinate(currentRow+1,currentColumn) );
+    }
+    if( (currentRow-1) >= 0 ){
+        existingCoordinates.add( new Coordinate(currentRow-1,currentColumn) );
+    }
+    if( (currentColumn+1) < dimension){
+        existingCoordinates.add( new Coordinate(currentRow,currentColumn+1) );
+    }
+    if( (currentColumn-1) >= 0 ){
+        existingCoordinates.add( new Coordinate(currentRow,currentColumn-1) );
+    }
+    existingCoordinates.each(function(coordinate){
+        var currentNode = map.getNode(coordinate);
+        if( !currentNode.isObstacle() ){
+            neighbours.add(currentNode);
+        }
+    });
+    return neighbours;
 }
 
 /* A-star classes and methods */
@@ -284,4 +319,21 @@ function handleUnitTests(){
         $('#unit-test-button').html("Enable Unit Tests");
     }
     $('#unit-test-button').toggleClass("success").toggleClass("alert");
+}
+
+/* Pathfinding help Functions */
+
+function reconstructPath(finalNode){
+    var path = new Array();
+    var current = finalNode;
+    path.push(finalNode);
+    var predecessor = current.getPredecessor();
+    while(predecessor != null){
+        predecessor.setInPath();
+        path.push(predecessor);
+        current = predecessor;
+        predecessor = current.getPredecessor();
+    }
+    var reversed = path.reverse();
+    return reversed;
 }
