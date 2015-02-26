@@ -21,6 +21,7 @@
     <script src="js/ui.js"></script>
     <script src="js/A*-algorithm.js"></script>
     <script src="js/BFS.js"></script>
+    <script src="js/DFS.js"></script>
     <script src="js/unit-tests.js"></script>
     <title>A* algorithm Demo</title>
 </head>
@@ -94,6 +95,7 @@
                 $('#demo-button').after("<select id='algorithm'>" +
                                         "<option value='A_star'>A* star algorithm</option>" +
                                         "<option value='bfs'>Breadth First Search (BFS)</option>" +
+                                        "<option value='dfs'>Depth First Search (DFS)</option>" +
                                         "</select>");
                 disableObstacles(map);
                 enableRobot1();
@@ -120,6 +122,9 @@
             }
             else if(algorithmName == "bfs"){
                 map.executeBFSRecursive(robot1Coordinate, robot2Coordinate, delay/4);
+            }
+            else if(algorithmName == "dfs"){
+                map.executeDFSRecursive(robot1Coordinate, robot2Coordinate, delay/4);
             }
         }
     </script>

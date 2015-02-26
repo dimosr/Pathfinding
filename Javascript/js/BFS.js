@@ -45,9 +45,9 @@ SquareMap.prototype.executeBFSRecursive = function(start, target, delay){
     }, delay);
 }
 
-SquareMap.prototype.executeBFSStep = function(solutionFound, openSet, target, delay){
-    var neighbourNodesCoordinates
-    currentNode = map.getNode(openSet.dequeue());
+SquareMap.prototype.executeBFSStep = function(solutionFound, openQueue, target, delay){
+    var neighbourNodesCoordinates;
+    currentNode = map.getNode(openQueue.dequeue());
     if(!currentNode){
         solutionFound = false;
         return solutionFound;
@@ -64,13 +64,13 @@ SquareMap.prototype.executeBFSStep = function(solutionFound, openSet, target, de
         if( !neighbour.isClosed() ){
             if( !neighbour.isOpen() ){
                 neighbour.setPredecessor(currentNode);
-                openSet.enqueue(neighbour.getCoordinate());
+                openQueue.enqueue(neighbour.getCoordinate());
                 neighbour.setOpen();
             }
         }
     })
     setTimeout(function(){
-        map.executeBFSStep(solutionFound, openSet, target, delay);
+        map.executeBFSStep(solutionFound, openQueue, target, delay);
     }, delay);
 
 }
