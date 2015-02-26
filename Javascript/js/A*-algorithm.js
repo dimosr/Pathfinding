@@ -71,7 +71,7 @@ function getOptimum(nodesCoordinates){
 
 SquareMap.prototype.executeAStarAlgorithmRecursive = function (start, target, delay){
     var openNodesCoordinates = new Set();     //to be evaluated
-    var currentNode, neighbourNodes, tentativeCost;
+    var currentNode, tentativeCost;
     var pathExists = true;
 
 
@@ -89,6 +89,7 @@ SquareMap.prototype.executeAStarAlgorithmRecursive = function (start, target, de
 }
 
 SquareMap.prototype.executeAStarStep = function(solutionFound, openSet, target, delay){
+    var neighbourNodesCoordinates
     var currentNode = getOptimum(openSet);
     if(!currentNode){
         solutionFound = false;

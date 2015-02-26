@@ -1,10 +1,9 @@
 SquareMap.prototype.executeBFS = function(start, target){
-    var closedNodes = new Set();    //already evaluated
-    var openNodes = new Queue();     //to be evaluated
-    var currentNode, neighbourNodes;
+    var openNodesCoordinates = new Queue();     //to be evaluated
+    var currentNode, neighbourNodesCoordinates;
 
     startNode = map.getNode(start);
-    openNodes.enqueue(startNode);
+    openNodes.enqueue(startNode.getCoordinate());
 
     while(!openNodes.isEmpty()){
         currentNode = openNodes.dequeue();
@@ -16,14 +15,15 @@ SquareMap.prototype.executeBFS = function(start, target){
             reconstructPath(currentNode);
             return true;    //path found
         }
-        closedNodes.add(currentNode);
+
         currentNode.setClosed();
-        neighbourNodes = this.getNeighbours(currentNode);
-        neighbourNodes.each(function(neighbour){
+        neighbourNodesCoordinates = this.getNeighboursCoordinates(currentNode);
+        neighbourNodesCoordinates.each(function(neighbour){
+            neighbour = map.getNode(neighbourCoordinate);
             if( !neighbour.isClosed() ){
                 if( !neighbour.isOpen() ){
                     neighbour.setPredecessor(currentNode);
-                    openNodes.enqueue(neighbour);
+                    openNodes.enqueue(neighbour.getCoordinate());
                     neighbour.setOpen();
                 }
             }
@@ -33,20 +33,21 @@ SquareMap.prototype.executeBFS = function(start, target){
 }
 
 SquareMap.prototype.executeBFSRecursive = function(start, target, delay){
-    var openNodes = new Queue();     //to be evaluated
-    var currentNode, neighbourNodes;
+    var openNodesCoordinates = new Queue();     //to be evaluated
+    var currentNode;
     var pathExists = true;
 
     startNode = map.getNode(start);
-    openNodes.enqueue(startNode);
+    openNodesCoordinates.enqueue(startNode.getCoordinate());
 
     setTimeout(function(){
-        map.executeBFSStep(pathExists, openNodes, target, delay);
+        map.executeBFSStep(pathExists, openNodesCoordinates, target, delay);
     }, delay);
 }
 
 SquareMap.prototype.executeBFSStep = function(solutionFound, openSet, target, delay){
-    currentNode = openSet.dequeue();
+    var neighbourNodesCoordinates
+    currentNode = map.getNode(openSet.dequeue());
     if(!currentNode){
         solutionFound = false;
         return solutionFound;
@@ -57,12 +58,13 @@ SquareMap.prototype.executeBFSStep = function(solutionFound, openSet, target, de
     }
 
     currentNode.setClosed();
-    neighbourNodes = this.getNeighbours(currentNode);
-    neighbourNodes.each(function(neighbour){
+    neighbourNodesCoordinates = this.getNeighboursCoordinates(currentNode);
+    neighbourNodesCoordinates.each(function(neighbourCoordinate){
+        neighbour = map.getNode(neighbourCoordinate);
         if( !neighbour.isClosed() ){
             if( !neighbour.isOpen() ){
                 neighbour.setPredecessor(currentNode);
-                openSet.enqueue(neighbour);
+                openSet.enqueue(neighbour.getCoordinate());
                 neighbour.setOpen();
             }
         }
