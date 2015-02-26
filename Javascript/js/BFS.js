@@ -3,9 +3,9 @@ SquareMap.prototype.executeBFS = function(start, target){
     var currentNode, neighbourNodesCoordinates;
 
     startNode = map.getNode(start);
-    openNodes.enqueue(startNode.getCoordinate());
+    openNodesCoordinates.enqueue(startNode.getCoordinate());
 
-    while(!openNodes.isEmpty()){
+    while(!openNodesCoordinates.isEmpty()){
         currentNode = openNodes.dequeue();
         if(!currentNode){
             alert("no path");
