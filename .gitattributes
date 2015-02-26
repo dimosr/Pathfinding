@@ -1,0 +1,15 @@
+#default behaviour if core.autocrlf undefined
+* text=auto
+
+#files converted to native line endings
+*.js text
+*.html text
+*.txt text
+*.css text
+*.java text
+*.c text
+
+#binary files not to be modified
+*.png binary
+*.jpg binary
+*.gif binary
