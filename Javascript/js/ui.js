@@ -120,12 +120,12 @@ SquareMap.prototype.setNode = function(coordinate,node) {
     this.array[coordinate.getRow()][coordinate.getColumn()] = node;
 }
 
-SquareMap.prototype.getNeighbours = function(node){
+SquareMap.prototype.getNeighboursCoordinates = function(node){
     var currentRow = node.getCoordinate().getRow();
     var currentColumn = node.getCoordinate().getColumn();
     var dimension = this.getDimension();
     var existingCoordinates = new Set();
-    var neighbours = new Set();
+    var neighboursCoordinates = new Set();
     if( (currentRow+1) < dimension){
         existingCoordinates.add( new Coordinate(currentRow+1,currentColumn) );
     }
@@ -141,10 +141,10 @@ SquareMap.prototype.getNeighbours = function(node){
     existingCoordinates.each(function(coordinate){
         var currentNode = map.getNode(coordinate);
         if( !currentNode.isObstacle() ){
-            neighbours.add(currentNode);
+            neighboursCoordinates.add(coordinate);
         }
     });
-    return neighbours;
+    return neighboursCoordinates;
 }
 
 /* A-star classes and methods */

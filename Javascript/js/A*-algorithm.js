@@ -1,15 +1,15 @@
 SquareMap.prototype.executeAStarAlgorithm = function (start, target){
-    var openNodes = new Set();     //to be evaluated
+    var openNodesCoordinates = new Set();     //to be evaluated
     var currentNode, neighbourNodes, tentativeCost;
 
     startNode = map.getNode(start);
-    openNodes.add(startNode);
+    openNodesCoordinates.add(startNode.getCoordinate());
 
     startNode.setGCost(0);
     startNode.setFCost(0 + heuristicCost(start, target)) ;
 
-    while(openNodes.size() > 0){
-        currentNode = getOptimum(openNodes);
+    while(openNodesCoordinates.size() > 0){
+        var currentNode = getOptimum(openSet);
         if(!currentNode){
             alert("no path");
             return false;
@@ -19,10 +19,11 @@ SquareMap.prototype.executeAStarAlgorithm = function (start, target){
             return true;    //path found
         }
 
-        openNodes.remove(currentNode);
+        openNodes.remove(currentNode.getCoordinate());
         currentNode.setClosed();
-        neighbourNodes = this.getNeighbours(currentNode);
-        neighbourNodes.each(function(neighbour){
+        neighbourNodesCoordinates = this.getNeighboursCoordinates(currentNode);
+        neighbourNodesCoordinates.each(function(neighbourCoordinate){
+            neighbour = map.getNode(neighbourCoordinate);
             if( !neighbour.isClosed() ){
                 tentativeCost = currentNode.getGCost() + heuristicCost(currentNode.getCoordinate() ,neighbour.getCoordinate());
                 if( (tentativeCost < neighbour.getGCost()) || (!openNodes.contains(neighbour)) ){
@@ -48,39 +49,40 @@ function heuristicCost(from, to){
     return euclideanDistance;
 }
 
-function getOptimum(nodes){
+function getOptimum(nodesCoordinates){
     var minimumFCost;
     var minNode;
-    if(nodes.size() == 0){
+    if(nodesCoordinates.size() == 0){
         alert("zero size");
         return null;
     }
     else{
-        nodes.each(function(node){
-            if( (!minNode) || (node.getFCost() < minimumFCost ) ){
+        nodesCoordinates.each(function(coordinate){
+            var node = map.getNode(coordinate);
+            if( (!minNode) || ( node.getFCost() < minimumFCost ) ){
                 minimumFCost = node.getFCost() ;
                 minNode = node;
             }
         });
     }
-    nodes.remove(minNode);
+    nodesCoordinates.remove(minNode.getCoordinate());
     return minNode;
 }
 
 SquareMap.prototype.executeAStarAlgorithmRecursive = function (start, target, delay){
-    var openNodes = new Set();     //to be evaluated
+    var openNodesCoordinates = new Set();     //to be evaluated
     var currentNode, neighbourNodes, tentativeCost;
     var pathExists = true;
 
 
     startNode = map.getNode(start);
-    openNodes.add(startNode);
+    openNodesCoordinates.add(startNode.getCoordinate());
 
     startNode.setGCost(0);
     startNode.setFCost(0 + heuristicCost(start, target)) ;
 
     setTimeout(function(){
-        map.executeAStarStep(pathExists, openNodes, target, delay);
+        map.executeAStarStep(pathExists, openNodesCoordinates, target, delay);
     }, delay);
 
 
@@ -97,18 +99,19 @@ SquareMap.prototype.executeAStarStep = function(solutionFound, openSet, target, 
         return true;    //path found
     }
 
-    openSet.remove(currentNode);
+    openSet.remove(currentNode.getCoordinate());
     currentNode.setClosed();
-    neighbourNodes = this.getNeighbours(currentNode);
-    neighbourNodes.each(function(neighbour){
+    neighbourNodesCoordinates = this.getNeighboursCoordinates(currentNode);
+    neighbourNodesCoordinates.each(function(neighbourCoordinate){
+        neighbour = map.getNode(neighbourCoordinate);
         if( !neighbour.isClosed() ){
             tentativeCost = currentNode.getGCost() + heuristicCost(currentNode.getCoordinate() ,neighbour.getCoordinate());
-            if( (tentativeCost < neighbour.getGCost()) || (!openSet.contains(neighbour)) ){
+            if( (tentativeCost < neighbour.getGCost()) || (!openSet.contains(neighbour.getCoordinate())) ){
                 neighbour.setPredecessor(currentNode);
                 neighbour.setGCost(tentativeCost);
                 neighbour.setFCost(neighbour.getGCost() + heuristicCost(neighbour.getCoordinate(),target) );
-                if(!openSet.contains(neighbour)){
-                    openSet.add(neighbour);
+                if(!openSet.contains(neighbour.getCoordinate())){
+                    openSet.add(neighbour.getCoordinate());
                     neighbour.setOpen();
                 }
             }
