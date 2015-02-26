@@ -6,7 +6,7 @@ SquareMap.prototype.executeBFS = function(start, target){
     openNodesCoordinates.enqueue(startNode.getCoordinate());
 
     while(!openNodesCoordinates.isEmpty()){
-        currentNode = openNodes.dequeue();
+        currentNode = map.getNode(openNodes.dequeue());
         if(!currentNode){
             alert("no path");
             return false;
