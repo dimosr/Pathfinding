@@ -51,14 +51,16 @@
                 </ul>
             </div>
 
-            <div class="columns small-12 large-12">
-                <div id="speed-slider" class="range-slider" data-slider data-options="start: 1; end: 300; step: 3">
+            <div id="speed-slider-container"class="columns small-12 large-12">
+                <h4>Animation Speed</h4>
+                <div id="speed-slider" class="range-slider round" data-slider data-options="start: 300; end: 1; step: -3">
                     <span class="range-slider-handle" role="slider" tabindex="0"></span>
                     <span class="range-slider-active-segment"></span>
                     <input type="hidden">
                 </div>
             </div>
             <div id="demo-button" class="button info">Set obstacles in the map</div>
+            <div id="user-message"></div>
         </div>
 
     </div>
@@ -89,51 +91,9 @@
             handleUnitTests();
         })
 
-        $('#demo-button').click(function(){
-            $(this).unbind('click');
-            $(this).removeClass('info').addClass('disabled');
-            enableObstacles(map);
-            $(this).html("Done with obstacles. Set robots positions.");
-            $(this).click(function(){
-                $(this).unbind('click');
-                $(this).removeClass('disabled').addClass('success');
-                $(this).html("Execute DEMO");
-                $('#demo-button').after("<select id='algorithm'>" +
-                                        "<option value='A_star'>A* star algorithm</option>" +
-                                        "<option value='bfs'>Breadth First Search (BFS)</option>" +
-                                        "<option value='dfs'>Depth First Search (DFS)</option>" +
-                                        "</select>");
-                disableObstacles(map);
-                enableRobot1();
-                $(this).click(function(){
-                    if(robotsDefined){
-                        $(this).unbind('click');
-                        $(this).removeClass('success').addClass('alert');
-                        $(this).html("Reset DEMO");
-                        var delay = $('#speed-slider').attr('data-slider');
-                        dispatchPathfindingAlgorithm($('#algorithm').val(), delay);
-                        $(this).click(function(){
-                            location.reload();
-                        });
-                    }
-                    else{
-                        alert("You must first define the positions of the 2 robots.")
-                    }
-                });
-            });
-        })
+        initHandlers();
 
-        function dispatchPathfindingAlgorithm(algorithmName, delay){
-            if(algorithmName == "A_star"){
-                map.executeAStarAlgorithmRecursive(robot1Coordinate, robot2Coordinate, delay);
-            }
-            else if(algorithmName == "bfs"){
-                map.executeBFSRecursive(robot1Coordinate, robot2Coordinate, delay/4);
-            }
-            else if(algorithmName == "dfs"){
-                map.executeDFSRecursive(robot1Coordinate, robot2Coordinate, delay/4);
-            }
-        }
+        
     </script>
 </body>
 </html>

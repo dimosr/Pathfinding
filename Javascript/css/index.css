@@ -21,6 +21,10 @@
     border-radius:15px;
 }
 
+#demo-button{
+    cursor: pointer;
+}
+
 #qunit{
 	width:50%;
 	text-align:center;

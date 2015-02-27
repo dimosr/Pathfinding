@@ -213,9 +213,11 @@ function enableObstacles(map){
             map.getNode(new Coordinate(i,j)).enableObstacleToggle();
         }
     }
-    alert("You can set the obstacles in the map by clicking on a node.\n" +
-            "Grey nodes are free and black nodes are obstacles.\n" +
-            "When you have finished, press again the button to proceed.\n");
+    $('#user-message').html("<div data-alert class='alert-box secondary'>" +
+            "You can set the obstacles in the map by clicking on a node.<br/>" +
+            "Grey nodes are free and black nodes are obstacles.<br/>" +
+            "When you have finished, press again the button to proceed.<br/>" +
+            "</div>");
 
 }
 
@@ -230,9 +232,11 @@ function disableObstacles(map){
 
 
 function enableRobot1(){
-    alert("You can set the positions of the 2 robots by clicking on a node.\n" +
-            "If you click when having already defined the 2 robots, the oldest one will be reset.\n" +
-            "When you have finished, press again the button to execute the DEMO.\n");
+    $('#user-message').html("<div data-alert class='alert-box warning'>" +
+            "You can set the positions of the 2 robots by clicking on a node.<br/>" +
+            "When you have finished, select the algorithm to be executed,<br/>" +
+            "set the speed of the animation demo press again the button to execute the DEMO." +
+            "</div>");
     $('.cell').not('.obstacle').click(function(){
         setRobot1($(this));
         disableRobot();
@@ -272,6 +276,61 @@ function setRobot2(obj){
     robot2Image = "img/robot2.jpg"
     obj.attr('id', robot2ID);
     obj.html("<img src='" + robot2Image + "'/>");
+}
+
+function initHandlers(){
+    $( document ).ready(function() {
+        $('#speed-slider-container').hide();
+    });
+
+    $('#demo-button').click(function(){
+        $(this).unbind('click');
+        $(this).removeClass('info').addClass('disabled');
+        enableObstacles(map);
+        $(this).html("Done with obstacles. Set robots positions.");
+        $(this).click(function(){
+            $(this).unbind('click');
+            $(this).removeClass('disabled').addClass('success');
+            $(this).html("Execute DEMO");
+            $('#speed-slider-container').show();
+            $(document).foundation();
+            $('#demo-button').after("<select id='algorithm'>" +
+                                    "<option value='A_star'>A* star algorithm</option>" +
+                                    "<option value='bfs'>Breadth First Search (BFS)</option>" +
+                                    "<option value='dfs'>Depth First Search (DFS)</option>" +
+                                    "</select>");
+            disableObstacles(map);
+            enableRobot1();
+            $(this).click(function(){
+                if(robotsDefined){
+                    $(this).unbind('click');
+                    $(this).removeClass('success').addClass('alert');
+                    $(this).html("Reset DEMO");
+                    var delay = $('#speed-slider').attr('data-slider');
+                    $('#speed-slider-container').hide();
+                    dispatchPathfindingAlgorithm($('#algorithm').val(), delay);
+                    $(this).click(function(){
+                        location.reload();
+                    });
+                }
+                else{
+                    alert("You must first define the positions of the 2 robots.")
+                }
+            });
+        });
+    })
+}
+
+function dispatchPathfindingAlgorithm(algorithmName, delay){
+    if(algorithmName == "A_star"){
+        map.executeAStarAlgorithmRecursive(robot1Coordinate, robot2Coordinate, delay);
+    }
+    else if(algorithmName == "bfs"){
+        map.executeBFSRecursive(robot1Coordinate, robot2Coordinate, delay/4);
+    }
+    else if(algorithmName == "dfs"){
+        map.executeDFSRecursive(robot1Coordinate, robot2Coordinate, delay/4);
+    }
 }
 
 /* ----  Algorithm API functions ---- */
