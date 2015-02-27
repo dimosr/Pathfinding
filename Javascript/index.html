@@ -51,6 +51,13 @@
                 </ul>
             </div>
 
+            <div class="columns small-12 large-12">
+                <div id="speed-slider" class="range-slider" data-slider data-options="start: 1; end: 300; step: 3">
+                    <span class="range-slider-handle" role="slider" tabindex="0"></span>
+                    <span class="range-slider-active-segment"></span>
+                    <input type="hidden">
+                </div>
+            </div>
             <div id="demo-button" class="button info">Set obstacles in the map</div>
         </div>
 
@@ -68,7 +75,6 @@
         var unitTestsVisible = false;
         var mapDimension = 24;
         var robotsDefined = false;
-        var delay = 300;
 
         var map = createMap(mapDimension, "map", "cell");
 
@@ -104,7 +110,8 @@
                         $(this).unbind('click');
                         $(this).removeClass('success').addClass('alert');
                         $(this).html("Reset DEMO");
-                        dispatchPathfindingAlgorithm($('#algorithm').val());
+                        var delay = $('#speed-slider').attr('data-slider');
+                        dispatchPathfindingAlgorithm($('#algorithm').val(), delay);
                         $(this).click(function(){
                             location.reload();
                         });
@@ -116,7 +123,7 @@
             });
         })
 
-        function dispatchPathfindingAlgorithm(algorithmName){
+        function dispatchPathfindingAlgorithm(algorithmName, delay){
             if(algorithmName == "A_star"){
                 map.executeAStarAlgorithmRecursive(robot1Coordinate, robot2Coordinate, delay);
             }
