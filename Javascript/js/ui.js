@@ -188,7 +188,7 @@ function Create2DArray(dimension) {
 }
 
 function createCellDiv(cellClass){
-    var div = $('<div>', {class: cellClass});
+    var div = $('<div>', {'class': cellClass});
     div = div.width('30px');
     div = div.height( '30px' );
     return div;

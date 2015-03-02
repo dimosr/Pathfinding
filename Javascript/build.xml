@@ -1,0 +1,78 @@
+<project name="Pathfinding Algorithms Demo" >
+	<target name="clean">
+        <delete dir="build"/>
+    </target>
+
+    <target name="build" depends="clean, create, copy, js.minify, css.minify, replace">
+    	<antcall target="clean" />
+    	<antcall target="create" />
+    	<antcall target="copy" />
+    	<antcall target="js.minify" />
+    	<antcall target="css.minify" />
+    	<antcall target="replace" />
+    </target>
+
+    <target name="create">
+    	<echo message="Creating project folders"/>
+        <mkdir dir="build"/>
+        <mkdir dir="build/js"/>
+        <mkdir dir="build/css"/>
+        <mkdir dir="build/img"/>
+    </target>
+
+    <target name="copy">
+    	<echo message="Copying images to build folder.."/>
+    	<copy todir="build/img">
+    		<fileset dir="img"/>
+  		</copy>
+  		<echo message="Copying index file"/>
+    	<copy file="index.html" todir="build"/>
+    </target>
+
+    <target name="replace">
+    	<echo message="Replacing js,css with minified versions in index.html ..."/>
+    	<replace file="build/index.html" token="foundation/css/foundation.min.css" value="css/foundation.min.css"/>
+    	<replace file="build/index.html" token="css/index.css" value="css/index.min.css"/>
+    	<replace file="build/index.html" token="foundation/js/vendor/modernizr.js" value="js/modernizr.min.js"/>
+    	<replace file="build/index.html" token="foundation/js/vendor/jquery.js" value="js/jquery.min.js"/>
+    	<replace file="build/index.html" token="foundation/js/vendor/fastclick.js" value="js/fastclick.min.js"/>
+    	<replace file="build/index.html" token="foundation/js/foundation.min.js" value="js/foundation.min.js"/>
+    	<replace file="build/index.html" token="css/custom-qunit.css" value="css/custom-qunit.min.css"/>
+    	<replace file="build/index.html" token="js/qunit.js" value="js/qunit.min.js"/>
+    	<replace file="build/index.html" token="js/util.js" value="js/util.min.js"/>
+    	<replace file="build/index.html" token="js/ui.js" value="js/ui.min.js"/>
+    	<replace file="build/index.html" token="js/A*-algorithm.js" value="js/A*-algorithm.min.js"/>
+    	<replace file="build/index.html" token="js/BFS.js" value="js/BFS.min.js"/>
+    	<replace file="build/index.html" token="js/DFS.js" value="js/DFS.min.js"/>
+    	<replace file="build/index.html" token="js/unit-tests.js" value="js/unit-tests.min.js"/>
+    </target>
+
+    <target name="js.minify" >
+    	<echo message="Minifying js files and copying to build/js folder ..."/>
+    	<apply executable="java" parallel="false">
+        	<fileset dir="js" includes="A*-algorithm.js, BFS.js, DFS.js, qunit.js, ui.js, unit-tests.js, util.js"/>
+        	<fileset dir="foundation/js/vendor" includes="modernizr.js, jquery.js, fastclick.js"/>
+        	<arg line="-jar"/>
+        	<arg path="ant-lib/yuicompressor-2.4.2.jar"/>
+        	<srcfile/>
+        	<arg line="-o"/>
+        	<mapper type="glob" from="*.js" to="build/js/*.min.js"/>
+        	<targetfile/>
+    	</apply>
+    	<copy file="foundation/js/foundation.min.js" todir="build/js"/>
+	</target>
+	<target name="css.minify" >
+		<echo message="Minifying css files and copying to build/css folder ..."/>
+    	<apply executable="java" parallel="false">
+        	<fileset dir="css" includes="custom-qunit.css, index.css"/>
+        	<fileset dir="foundation/css" includes="foundation.css"/>
+        	<arg line="-jar"/>
+        	<arg path="ant-lib/yuicompressor-2.4.2.jar"/>
+        	<arg line="--line-break 0"/>
+        	<srcfile/>
+        	<arg line="-o"/>
+        	<mapper type="glob" from="*.css" to="build/css/*.min.css"/>
+        	<targetfile/>
+    	</apply>
+	</target>
+</project>
