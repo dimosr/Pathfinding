@@ -7,7 +7,7 @@
 .cell{
     float:left; 
     border:1px solid black; 
-    height:40px;
+    box-shadow: 21px 15px 10px black;
     background-color:#C3C1AE;
     border-radius: 5px;
 }

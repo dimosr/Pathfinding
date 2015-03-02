@@ -189,8 +189,8 @@ function Create2DArray(dimension) {
 
 function createCellDiv(cellClass){
     var div = $('<div>', {'class': cellClass});
-    div = div.width('30px');
-    div = div.height( '30px' );
+    div = div.width('35px');
+    div = div.height( '35px' );
     return div;
 }
 
@@ -395,4 +395,13 @@ function reconstructPath(finalNode){
     }
     var reversed = path.reverse();
     return reversed;
+}
+
+/* Responsive Map Generation */
+
+function calculateResponsiveMapCells(){
+    var width = $(window).width();
+    var mapContainerWidth = width*(8/12);
+    var maximumCellsCapacity = (mapContainerWidth/40);
+    return Math.floor(maximumCellsCapacity);
 }
