@@ -9,6 +9,19 @@
     border:1px solid black; 
     height:40px;
     background-color:#C3C1AE;
+    border-radius: 5px;
+}
+
+h2{
+    color:white;
+}
+
+#forkme{
+    width:180px;
+    height:180px;
+    position: absolute;
+    top: 0px;
+    right: 0px;
 }
 
 #map{
@@ -19,6 +32,7 @@
     padding:20px;
     border:solid 2px white;
     border-radius:15px;
+    box-shadow:10px 10px 30px white;
 }
 
 #demo-button{
@@ -65,4 +79,8 @@
 
 .obstacle{
     background-color: black;
+}
+
+ul{
+    list-style-type: square;
 }
