@@ -214,11 +214,10 @@ function enableObstacles(map){
         }
     }
     $('#user-message').html("<div data-alert class='alert-box secondary'>" +
-            "You can set the obstacles in the map by clicking on a node.<br/>" +
+            "You can set more obstacles in the map by clicking on a node.<br/>" +
             "Grey nodes are free and black nodes are obstacles.<br/>" +
             "When you have finished, press again the button to proceed.<br/>" +
             "</div>");
-
 }
 
 function disableObstacles(map){
@@ -287,6 +286,7 @@ function initHandlers(){
         $(this).unbind('click');
         $(this).removeClass('info').addClass('disabled');
         enableObstacles(map);
+        generateRandomObstacles(map.getDimension()*2, map)
         $(this).html("Done with obstacles. Set robots positions.");
         $(this).click(function(){
             $(this).unbind('click');
@@ -397,11 +397,19 @@ function reconstructPath(finalNode){
     return reversed;
 }
 
-/* Responsive Map Generation */
+/* UI Enhancements */
 
 function calculateResponsiveMapCells(){
     var width = $(window).width();
     var mapContainerWidth = width*(8/12);
     var maximumCellsCapacity = (mapContainerWidth/40);
     return Math.floor(maximumCellsCapacity);
+}
+
+function generateRandomObstacles(number, map){
+    for(var i=0; i<number; i++){
+        var row = Math.floor(Math.random()*map.getDimension());
+        var column = Math.floor(Math.random()*map.getDimension());
+        map.getNode(new Coordinate(row, column)).makeObstacle();
+    }
 }

@@ -53,7 +53,7 @@ function getOptimum(nodesCoordinates){
     var minimumFCost;
     var minNode;
     if(nodesCoordinates.size() == 0){
-        alert("zero size");
+        alert("There is no path!");
         return null;
     }
     else{

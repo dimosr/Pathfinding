@@ -8,7 +8,7 @@ SquareMap.prototype.executeBFS = function(start, target){
     while(!openNodesCoordinates.isEmpty()){
         currentNode = map.getNode(openNodes.dequeue());
         if(!currentNode){
-            alert("no path");
+            alert("There is no path");
             return false;
         }
         if( currentNode.getCoordinate().equals(target) ){
@@ -50,6 +50,7 @@ SquareMap.prototype.executeBFSStep = function(solutionFound, openQueue, target, 
     currentNode = map.getNode(openQueue.dequeue());
     if(!currentNode){
         solutionFound = false;
+        alert("There is no path");
         return solutionFound;
     }
     if( currentNode.getCoordinate().equals(target) ){

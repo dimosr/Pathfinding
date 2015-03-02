@@ -16,6 +16,7 @@ SquareMap.prototype.executeDFSStep = function(solutionFound, openStack, target, 
     currentNode = map.getNode(openStack.pop());
     if(!currentNode){
         solutionFound = false;
+        alert("There is no path!");
         return solutionFound;
     }
     if( currentNode.getCoordinate().equals(target) ){
