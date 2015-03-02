@@ -17,7 +17,7 @@
 *.exe
 *.out
 *.app
-*.jar
+Java/*.jar
 
 #Build folders
 build/
