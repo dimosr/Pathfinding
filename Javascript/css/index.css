@@ -2,6 +2,17 @@
     height:100px;
     width:100%;
     text-align:center;
+    font-family: 'Courgette', cursive, Ubuntu;
+    font-size:17pt;
+    padding-right: 120px;
+}
+
+@media only screen 
+and (min-device-width : 320px) 
+and (max-device-width : 480px) {
+    #description{
+        font-size:14pt;
+    }
 }
 
 .cell{
@@ -14,6 +25,7 @@
 
 h2{
     color:white;
+    font-family: 'Courgette', cursive, Ubuntu;
 }
 
 #forkme{
@@ -33,6 +45,8 @@ h2{
     border:solid 2px white;
     border-radius:15px;
     box-shadow:10px 10px 30px white;
+    background-color: #2C247F;
+    font-family: 'Oxygen', sans-serif;
 }
 
 #demo-button{

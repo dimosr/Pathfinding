@@ -1,4 +1,5 @@
 function executeUnitTests(){
+    QUnit.config.scrolltop = false;
 
     QUnit.test("2D to 1D transformations", function( assert) {
         var value = transform2Dto1D(new Coordinate(1,4),8);

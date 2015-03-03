@@ -306,6 +306,7 @@ function initHandlers(){
                     $(this).unbind('click');
                     $(this).removeClass('success').addClass('alert');
                     $(this).html("Reset DEMO");
+                    $('#user-message').hide();
                     var delay = $('#speed-slider').attr('data-slider');
                     $('#speed-slider-container').hide();
                     dispatchPathfindingAlgorithm($('#algorithm').val(), delay);
@@ -403,7 +404,7 @@ function calculateResponsiveMapCells(){
     var width = $(window).width();
     var mapContainerWidth = width*(8/12);
     var maximumCellsCapacity = (mapContainerWidth/40);
-    return Math.floor(maximumCellsCapacity);
+    return Math.floor(maximumCellsCapacity)-1;
 }
 
 function generateRandomObstacles(number, map){
