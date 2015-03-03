@@ -1,4 +1,4 @@
-<project name="Pathfinding Algorithms Demo" >
+<project name="Pathfinding Algorithms Demo" default="build" >
 	<target name="clean">
         <delete dir="build"/>
     </target>
@@ -38,6 +38,7 @@
     	<replace file="build/index.html" token="foundation/js/vendor/fastclick.js" value="js/fastclick.min.js"/>
     	<replace file="build/index.html" token="foundation/js/foundation.min.js" value="js/foundation.min.js"/>
     	<replace file="build/index.html" token="css/custom-qunit.css" value="css/custom-qunit.min.css"/>
+        <replace file="build/index.html" token="foundation/css/normalize.css" value="css/normalize.css"/>
     	<replace file="build/index.html" token="js/qunit.js" value="js/qunit.min.js"/>
     	<replace file="build/index.html" token="js/util.js" value="js/util.min.js"/>
     	<replace file="build/index.html" token="js/ui.js" value="js/ui.min.js"/>
@@ -65,7 +66,6 @@
 		<echo message="Minifying css files and copying to build/css folder ..."/>
     	<apply executable="java" parallel="false">
         	<fileset dir="css" includes="custom-qunit.css, index.css"/>
-        	<fileset dir="foundation/css" includes="foundation.css"/>
         	<arg line="-jar"/>
         	<arg path="ant-lib/yuicompressor-2.4.2.jar"/>
         	<arg line="--line-break 0"/>
@@ -74,5 +74,7 @@
         	<mapper type="glob" from="*.css" to="build/css/*.min.css"/>
         	<targetfile/>
     	</apply>
+        <copy file="foundation/css/foundation.min.css" todir="build/css"/>
+        <copy file="foundation/css/normalize.css" todir="build/css"/>
 	</target>
 </project>
