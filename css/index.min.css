@@ -1,0 +1,19 @@
+#description{height:100px;width:100%;text-align:center;font-family:'Courgette',cursive,Ubuntu;font-size:17pt;padding-right:120px;}
+@media only screen and(min-device-width :320px) and(max-device-width :480px){#description{font-size:14pt;}
+}
+.cell{float:left;border:1px solid black;box-shadow:21px 15px 10px black;background-color:#C3C1AE;border-radius:5px;}
+h2,h4{color:white;font-family:'Courgette',cursive,Ubuntu;}
+#forkme{width:180px;height:180px;position:absolute;top:0;right:0;}
+#map{padding:20px;}
+#map-description{padding:20px;border:solid 2px white;border-radius:15px;box-shadow:10px 10px 30px white;background-color:#2C247F;font-family:'Oxygen',sans-serif;}
+#demo-button{cursor:pointer;}
+#qunit{width:50%;text-align:center;clear:both;display:none;}
+#qunit-testrunner-toolbar{display:none;}
+#qunit-tests li a{display:none!important;}
+.fullWidth{width:100%;margin-left:auto;margin-right:auto;max-width:initial;}
+.row{margin-top:30px;}
+.in-path{background-color:#338A2E;}
+.open{background-color:#FFF6AA;}
+.closed{background-color:#033D53;}
+.obstacle{background-color:black;}
+ul{list-style-type:square;}
