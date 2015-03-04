@@ -20,4 +20,4 @@ Implementations
 
 <br/>
 *Note*:<br/>
-***Each folder contains a separate README with more details**
+* **Each folder contains a separate README with more details**
