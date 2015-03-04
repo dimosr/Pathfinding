@@ -23,7 +23,7 @@ and (max-device-width : 480px) {
     border-radius: 5px;
 }
 
-h2{
+h2, h4{
     color:white;
     font-family: 'Courgette', cursive, Ubuntu;
 }

@@ -286,7 +286,7 @@ function initHandlers(){
         $(this).unbind('click');
         $(this).removeClass('info').addClass('disabled');
         enableObstacles(map);
-        generateRandomObstacles(map.getDimension()*2, map)
+        generateRandomObstacles(map.getDimension()*5, map)
         $(this).html("Done with obstacles. Set robots positions.");
         $(this).click(function(){
             $(this).unbind('click');
@@ -320,6 +320,13 @@ function initHandlers(){
             });
         });
     })
+
+    $( window ).resize(function() {
+        if(!resized){
+            alert('Please do not resize the screen of the browser in order to complete the Demo');
+            resized=true;
+        }
+    });
 }
 
 function dispatchPathfindingAlgorithm(algorithmName, delay){
