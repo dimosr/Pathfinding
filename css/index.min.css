@@ -7,6 +7,9 @@ h2,h4{color:white;font-family:'Courgette',cursive,Ubuntu;}
 #map{padding:20px;}
 #map-description{padding:20px;border:solid 2px white;border-radius:15px;box-shadow:10px 10px 30px white;background-color:#2C247F;font-family:'Oxygen',sans-serif;}
 #demo-button{cursor:pointer;}
+#statisticsModal{background-color:black;color:white;font-family:'Courgette',cursive,Ubuntu;}
+#statisticsModal p span{font-size:20px!important;}
+.statistic{color:white;}
 #qunit{width:50%;text-align:center;clear:both;display:none;}
 #qunit-testrunner-toolbar{display:none;}
 #qunit-tests li a{display:none!important;}
