@@ -53,6 +53,20 @@ h2, h4{
     cursor: pointer;
 }
 
+#statisticsModal{
+    background-color:black;
+    color:white;
+    font-family: 'Courgette', cursive, Ubuntu;
+}
+
+#statisticsModal p span{
+    font-size:20px !important;
+}
+
+.statistic{
+    color:white;
+}
+
 #qunit{
 	width:50%;
 	text-align:center;

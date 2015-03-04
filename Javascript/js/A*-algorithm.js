@@ -85,7 +85,6 @@ SquareMap.prototype.executeAStarAlgorithmRecursive = function (start, target, de
         map.executeAStarStep(pathExists, openNodesCoordinates, target, delay);
     }, delay);
 
-
 }
 
 SquareMap.prototype.executeAStarStep = function(solutionFound, openSet, target, delay){
@@ -97,6 +96,7 @@ SquareMap.prototype.executeAStarStep = function(solutionFound, openSet, target, 
     }
     if( currentNode.getCoordinate().equals(target) ){
         reconstructPath(currentNode);
+        setTimeout(function(){showStatistics()},delay);
         return true;    //path found
     }
 

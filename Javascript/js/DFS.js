@@ -21,6 +21,7 @@ SquareMap.prototype.executeDFSStep = function(solutionFound, openStack, target, 
     }
     if( currentNode.getCoordinate().equals(target) ){
         reconstructPath(currentNode);
+        setTimeout(function(){showStatistics()},delay);
         return true;
     }
 

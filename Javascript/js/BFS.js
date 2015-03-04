@@ -55,6 +55,7 @@ SquareMap.prototype.executeBFSStep = function(solutionFound, openQueue, target, 
     }
     if( currentNode.getCoordinate().equals(target) ){
         reconstructPath(currentNode);
+        setTimeout(function(){showStatistics()},delay);
         return true;
     }
 

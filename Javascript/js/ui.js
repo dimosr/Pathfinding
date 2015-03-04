@@ -421,3 +421,16 @@ function generateRandomObstacles(number, map){
         map.getNode(new Coordinate(row, column)).makeObstacle();
     }
 }
+
+function showStatistics(){
+    $(window).unbind('resize');
+    var closed = $('.closed').size();
+    var open = $('.open').size();
+    var inPath = $('.in-path').size();
+    var extended = closed + open + inPath;
+    var efficiency = (inPath/(extended + inPath)).toFixed(3)*100;
+    $('#extended-number').html(extended);
+    $('#final-number').html(inPath);
+    $('#efficiency-number').html(efficiency + '%');
+    $('#statisticsModal').foundation('reveal', 'open');
+}
