@@ -9,8 +9,7 @@ field of Artificial Intelligence (AI), especially in gaming design. In this repo
 3 basic algorithms have been implemented: [Breadth-First Search (BFS)](http://en.wikipedia.org/wiki/Breadth-first_search), 
 [Depth-First Search (DFS)](http://en.wikipedia.org/wiki/Depth-first_search) and 
 [A* Search algorithm](http://en.wikipedia.org/wiki/A*_search_algorithm). The implementations using C
-and Java contain only A* algorithm. The Javascript implementations contain all 3 algorithms and a live [DEMO]() has been implemented,
-where all algorithms can be executed in a browser. The algorithms can also be compared in this DEMO.
+and Java contain only A* algorithm. The Javascript implementations contain all 3 algorithms and a live [DEMO](http://www.dimosraptis.com/Pathfinding) has been implemented, where all algorithms can be executed in a browser. The algorithms can also be compared in this DEMO.
 
 Implementations
 ---------------------------------------------------------------------------------------------------
