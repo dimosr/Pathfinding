@@ -370,7 +370,7 @@ function handleUnitTests(){
     }
 
     if(unitTestsVisible == false){
-        $('#qunit').show({
+        $('#qunit').slideToggle({
             duration:2000,
             easing:"linear"
         });
@@ -378,7 +378,7 @@ function handleUnitTests(){
         $('#unit-test-button').html("Disable Unit Tests");
     }
     else{
-        $('#qunit').hide({
+        $('#qunit').slideToggle({
             duration:2000,
             easing:"linear"
         });
