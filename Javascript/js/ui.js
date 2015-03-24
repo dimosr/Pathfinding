@@ -325,8 +325,8 @@ function initHandlers(){
     $( window ).resize(function() {
         if(!hasInitiatedDemo){
             $('#map').html('');
-            var mapDimension = calculateResponsiveMapCells();
-            var map = createMap(mapDimension, "map", "cell");
+            mapDimension = calculateResponsiveMapCells();
+            map = createMap(mapDimension, "map", "cell");
         }
         else{
             alert('The demo will be reloaded to stay functional');
