@@ -38,6 +38,11 @@
         Demo of various Pathfinding algorithms implemented in JS (A*, BFS, DFS)
     </div>
 
+    <div data-alert class="alert-box secondary" id="resize-alert">
+            Please avoid resizing the browser in the middle of the DEMO
+            <a href="#" class="close">&times;</a>
+    </div>
+
     <div id="map-container" class="row fullWidth">
 
         <div id="map" class="columns small-12 medium-8 large-8">
@@ -98,6 +103,7 @@
         var unitTestsVisible = false;
         var mapDimension = calculateResponsiveMapCells();
         var robotsDefined = false;
+        var hasInitiatedDemo = false;
 
         var map = createMap(mapDimension, "map", "cell");
 
