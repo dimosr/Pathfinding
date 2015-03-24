@@ -36,6 +36,13 @@ h2, h4{
     right: 0px;
 }
 
+#resize-alert{
+    position:fixed;
+    top:60px;
+    left:40px;
+    z-index:100;
+}
+
 #map{
     padding:20px;
 }
