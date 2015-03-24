@@ -40,6 +40,7 @@
 
     <div data-alert class="alert-box secondary" id="resize-alert">
             Please avoid resizing the browser in the middle of the DEMO
+            <a href="#" class="close">&times;</a>
     </div>
 
     <div id="map-container" class="row fullWidth">
@@ -102,6 +103,7 @@
         var unitTestsVisible = false;
         var mapDimension = calculateResponsiveMapCells();
         var robotsDefined = false;
+        var hasInitiatedDemo = false;
 
         var map = createMap(mapDimension, "map", "cell");
 
