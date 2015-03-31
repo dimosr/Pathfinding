@@ -21,6 +21,7 @@ and (max-device-width : 480px) {
     box-shadow: 21px 15px 10px black;
     background-color:#C3C1AE;
     border-radius: 5px;
+    cursor: pointer;
 }
 
 h2, h4{
