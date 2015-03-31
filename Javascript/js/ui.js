@@ -48,7 +48,7 @@ Node.prototype.getGCost = function(){
 }
 
 Node.prototype.setGCost = function(gCost){
-    this.gScore = gCost;
+    this.gCost = gCost;
 }
 
 
@@ -237,9 +237,10 @@ function enableRobot1(){
             "set the speed of the animation demo press again the button to execute the DEMO." +
             "</div>");
     $('.cell').not('.obstacle').click(function(){
+        if( $('#' + robot1ID).length == 1 ){
+            $('#' + robot1ID).removeAttr('id').html('')
+        }
         setRobot1($(this));
-        disableRobot();
-        enableRobot2();
     });
 }
 
@@ -254,10 +255,11 @@ function setRobotsCoordinates(){
 
 function enableRobot2(){
     $('.cell').not('#robot1').not('.obstacle').click(function(){
+        if( $('#' + robot2ID).length == 1 ){
+            $('#' + robot2ID).removeAttr('id').html('')
+        }
         setRobot2($(this));
         robotsDefined = true;
-        disableRobot();
-        setRobotsCoordinates();
     });
 }
 
@@ -288,37 +290,56 @@ function initHandlers(){
         enableObstacles(map);
         generateRandomObstacles(map.getDimension()*5, map);
         hasInitiatedDemo = true
-        $(this).html("Done with obstacles. Set robots positions.");
+        $(this).html("Done with obstacles. Set 1st robot's position");
         $(this).click(function(){
             $(this).unbind('click');
-            $(this).removeClass('disabled').addClass('success');
-            $(this).html("Execute DEMO");
-            $('#speed-slider-container').show();
-            $(document).foundation();
-            $('#demo-button').after("<select id='algorithm'>" +
+            disableObstacles(map);
+            enableRobot1();
+            $(this).html("Done with 1st robot. Set 2nd robot's position");
+            $(this).click(function(){
+                if( $('#' + robot1ID).length == 0 ){
+                    alert("You have not set the position of 1st robot.");
+                }
+                else{
+                    $(this).unbind('click');
+                    disableRobot();
+                    enableRobot2();
+                    $(this).html("Done with 2nd robot. Proceed to Demo");
+                    $(this).click(function(){
+                        if( $('#' + robot2ID).length == 0 ){
+                            alert("You have not set the position of 2nd robot.");
+                        }
+                        else{
+                            $(this).unbind('click');
+                            disableRobot();
+                            setRobotsCoordinates();
+                            $(this).removeClass('disabled').addClass('success');
+                            $(this).html("Execute DEMO");
+                            $('#speed-slider-container').show();
+                            $(document).foundation();
+                            $('#demo-button').after("<select id='algorithm'>" +
                                     "<option value='A_star'>A* star algorithm</option>" +
                                     "<option value='bfs'>Breadth First Search (BFS)</option>" +
                                     "<option value='dfs'>Depth First Search (DFS)</option>" +
                                     "</select>");
-            disableObstacles(map);
-            enableRobot1();
-            $(this).click(function(){
-                if(robotsDefined){
-                    $(this).unbind('click');
-                    $(this).removeClass('success').addClass('alert');
-                    $(this).html("Reset DEMO");
-                    $('#user-message').hide();
-                    var delay = $('#speed-slider').attr('data-slider');
-                    $('#speed-slider-container').hide();
-                    dispatchPathfindingAlgorithm($('#algorithm').val(), delay);
-                    $(this).click(function(){
-                        location.reload();
+                            $(this).click(function(){
+                                $(this).unbind('click');
+                                $(this).removeClass('success').addClass('alert');
+                                $(this).html("Reset DEMO");
+                                $('#user-message').hide();
+                                var delay = $('#speed-slider').attr('data-slider');
+                                $('#speed-slider-container').hide();
+                                dispatchPathfindingAlgorithm($('#algorithm').val(), delay);
+                                $(this).click(function(){
+                                    location.reload();
+                                });
+                            });
+                        }
                     });
                 }
-                else{
-                    alert("You must first define the positions of the 2 robots.")
-                }
             });
+
+            
         });
     })
 
