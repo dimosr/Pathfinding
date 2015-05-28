@@ -21,3 +21,7 @@ Java/*.jar
 
 #Build folders
 build/
+
+#IDE
+.project
+.cproject
