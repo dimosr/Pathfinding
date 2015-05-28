@@ -44,7 +44,7 @@ all: A-star
 A-star: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: GCC C++ Linker'
-	g++  -I ./ -o "dist/A-star" $(OBJS) $(USER_OBJS) $(LIBS)
+	g++  -I ./ -o "A-star" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
