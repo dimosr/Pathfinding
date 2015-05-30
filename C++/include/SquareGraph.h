@@ -12,7 +12,6 @@ private:
 	vector< vector< Node > > map;
 	pair<int, int> firstRobotPos;
 	pair<int, int> secondRobotPos;
-
 public:
 	SquareGraph(int dimension);
 	Node getCellValue(pair<int, int> coord);
@@ -23,10 +22,13 @@ public:
 	pair<int, int> getSecondRobotPos();
 	float calculateDistance(pair<int, int> from, pair<int, int> to);
 	void calculateAllCosts();
-	int executeAStar();
-
-	priority_queue<int> openNodes;
-	priority_queue<int> closedNodes;
+	class compareQueueElements{
+		public:
+			bool operator()(pair<pair<int,int>,Node> a, pair<pair<int,int>,Node> b);
+	};
+	//bool compareQueueElements(pair<pair<int,int>,Node> a, pair<pair<int,int>,Node> b);
+	priority_queue< pair<pair<int,int>,Node> , vector<pair<pair<int,int>,Node> >, compareQueueElements> openNodes;
+	priority_queue< pair<pair< int, int>,Node>, vector<pair<pair<int,int>,Node> >, compareQueueElements> closedNodes;
 };
 
 #endif /* SQUAREGRAPH_H_ */

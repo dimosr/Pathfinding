@@ -29,6 +29,18 @@ SquareGraph InputHandler::readMap(string filename) {
 					line.clear();
 			}
 			graph.calculateAllCosts();
+			Node * temp1 = new Node();
+			temp1->setTotalCost(9);
+			Node * temp2 = new Node();
+			temp2->setTotalCost(3);
+			Node * temp3 = new Node();
+			temp3->setTotalCost(6);
+			graph.openNodes.push(make_pair(make_pair(1,1), *temp1));
+			graph.openNodes.push(make_pair(make_pair(2,2), *temp2));
+			graph.openNodes.push(make_pair(make_pair(3,3), *temp3));
+			cout << "top: " << graph.openNodes.top().first.first << endl;
+			graph.openNodes.pop();
+			cout << "top: " << graph.openNodes.top().first.first << endl;
 			inputFile.close();
 			return graph;
 		}

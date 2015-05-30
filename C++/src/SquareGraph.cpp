@@ -42,6 +42,9 @@ void SquareGraph::calculateAllCosts(){
 	}
 }
 
-int executeAStar(){
-
+bool SquareGraph::compareQueueElements::operator()(pair<pair<int,int>,Node> a, pair<pair<int,int>,Node> b){
+		Node n1 = a.second;
+		Node n2 = b.second;
+		return n1.getTotalCost() < n2.getTotalCost();
 }
+
