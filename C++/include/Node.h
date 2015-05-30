@@ -21,10 +21,20 @@ public:
 	void setCostToTarget(float cost);
 	void setTotalCost(float cost);
 	Node * getParent();
+	void setParent(Node n);
 	State getState();
 	Type getType();
 	void setType(char type);
 	void setState(State state);
+	bool isObstacle();
+	void setOpen();
+	void setClosed();
+	bool isUnvisited();
+	bool isOpen();
+	bool isClosed();
+	bool operator<(const Node& n) const;
+
+	int x,y;
 private:
 	float costFromStart;
 	float costToTarget;

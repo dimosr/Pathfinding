@@ -10,6 +10,8 @@ Node SquareGraph::getCellValue(pair<int, int> coord){
 void SquareGraph::setCellValue(pair<int, int> coord, char value){
 	this->map[coord.first][coord.second].setState(Node::UNVISITED);
 	this->map[coord.first][coord.second].setType(value);
+	this->map[coord.first][coord.second].x = coord.first;
+	this->map[coord.first][coord.second].y = coord.second;
 }
 
 pair<int, int> SquareGraph::getFirstRobotPos(){
@@ -42,9 +44,77 @@ void SquareGraph::calculateAllCosts(){
 	}
 }
 
-bool SquareGraph::compareQueueElements::operator()(pair<pair<int,int>,Node> a, pair<pair<int,int>,Node> b){
-		Node n1 = a.second;
-		Node n2 = b.second;
-		return n1.getTotalCost() < n2.getTotalCost();
+bool SquareGraph::compareNodes::operator()(Node n1, Node n2){
+		return n1.getTotalCost() > n2.getTotalCost();
 }
 
+bool SquareGraph::isInsideMap(Node n){
+	return (n.x >= 0) && (n.y >= 0) && (n.x < map[0].size()) && (n.y < map.size()) ;
+}
+
+set<Node> SquareGraph::getNeighbours(Node n){
+	set<Node> neighbours;
+	Node temp;
+	list<int> values = {-1, 1};
+
+	for(int i : values){
+		for(int j : values){
+			temp = getCellValue(make_pair((n.x+i), (n.y+j)));
+			if( (!temp.isObstacle()) && (isInsideMap(temp)) ){
+				neighbours.insert(temp);
+			}
+		}
+	}
+	return neighbours;
+}
+
+vector<Node> SquareGraph::reconstructPath(Node to, Node from){
+	vector<Node> path;
+	Node tmp = from;
+	Node parent;
+
+	path.push_back(tmp);
+	while(tmp.getParent() != nullptr){
+		parent = *(tmp.getParent());
+		path.push_back(parent);
+		tmp = parent;
+	}
+	reverse(path.begin(), path.end());
+	return path;
+}
+
+vector<Node> SquareGraph::executeAStar(){
+	pair<int, int> start = this->getFirstRobotPos();
+	pair<int, int> target = this->getSecondRobotPos();
+	Node startNode = getCellValue(start);
+	Node targetNode = getCellValue(target);
+	vector<Node> path;
+	Node currentNode;
+	set<Node> neighbours;
+
+	openNodes.push(startNode);
+	startNode.setOpen();
+	while(!openNodes.empty()){
+		currentNode = openNodes.top();
+		if(&currentNode == &targetNode){
+			return reconstructPath(startNode, targetNode);
+		}
+
+		openNodes.pop();
+		closedNodes.push(currentNode);
+		currentNode.setClosed();
+		neighbours = getNeighbours(currentNode);
+		for(auto i = neighbours.begin(); i != neighbours.end(); ++i){
+			Node neighbour = *i;
+			if(!neighbour.isClosed()){
+				int tentativeScore = currentNode.getCostFromStart() + this->calculateDistance(make_pair(currentNode.x, currentNode.y), make_pair(neighbour.x, neighbour.y));
+				if( (!neighbour.isOpen()) || (tentativeScore < currentNode.getCostFromStart()) ){
+					neighbour.setParent(currentNode);
+				}
+			}
+		}
+
+	}
+
+	return path;
+}

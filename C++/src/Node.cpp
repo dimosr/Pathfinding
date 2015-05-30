@@ -38,6 +38,10 @@ Node * Node::getParent(){
 	return this->parent;
 }
 
+void Node::setParent(Node n){
+	this->parent = &n;
+}
+
 Node::State Node::getState(){
 	return this->state;
 }
@@ -64,4 +68,32 @@ void Node::setType(char type){
 
 void Node::setState(State state){
 	this->state = state;
+}
+
+bool Node::isObstacle(){
+	return (this->type == OBSTACLE);
+}
+
+void Node::setOpen(){
+	this->state = OPEN;
+}
+
+void Node::setClosed(){
+	this->state = CLOSED;
+}
+
+bool Node::isUnvisited(){
+	return (this->state == UNVISITED);
+}
+
+bool Node::isOpen(){
+	return (this->state == OPEN);
+}
+
+bool Node::isClosed(){
+	return (this->state == CLOSED);
+}
+
+bool Node::operator<(const Node& n) const{
+	return ( this->totalCost > (n.totalCost) );
 }

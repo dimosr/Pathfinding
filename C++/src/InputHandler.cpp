@@ -28,19 +28,27 @@ SquareGraph InputHandler::readMap(string filename) {
 					}
 					line.clear();
 			}
-			graph.calculateAllCosts();
+			/*graph.calculateAllCosts();
 			Node * temp1 = new Node();
 			temp1->setTotalCost(9);
+			temp1->x = 1;
+			temp1->y = 1;
 			Node * temp2 = new Node();
 			temp2->setTotalCost(3);
+			temp2->x = 2;
+			temp2->y = 2;
 			Node * temp3 = new Node();
 			temp3->setTotalCost(6);
-			graph.openNodes.push(make_pair(make_pair(1,1), *temp1));
-			graph.openNodes.push(make_pair(make_pair(2,2), *temp2));
-			graph.openNodes.push(make_pair(make_pair(3,3), *temp3));
-			cout << "top: " << graph.openNodes.top().first.first << endl;
+			temp3->x = 3;
+			temp3->y = 3;
+			graph.openNodes.push(*temp1);
+			graph.openNodes.push(*temp2);
+			graph.openNodes.push(*temp3);
+			cout << "top: " << graph.openNodes.top().x << endl;
 			graph.openNodes.pop();
-			cout << "top: " << graph.openNodes.top().first.first << endl;
+			cout << "top: " << graph.openNodes.top().x << endl;*/
+			vector<Node> path = graph.executeAStar();
+			cout << "moves" << path.size();
 			inputFile.close();
 			return graph;
 		}

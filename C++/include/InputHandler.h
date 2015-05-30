@@ -1,6 +1,7 @@
 #ifndef INCLUDE_INPUTHANDLER_H_
 #define INCLUDE_INPUTHANDLER_H_
 
+#include <vector>
 #include <iostream>
 #include <fstream>
 #include <stdexcept>

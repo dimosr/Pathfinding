@@ -2,6 +2,9 @@
 #define SQUAREGRAPH_H_
 
 #include <vector>
+#include <algorithm>
+#include <set>
+#include <list>
 #include <queue>
 #include <math.h>
 #include "include/Node.h"
@@ -22,13 +25,16 @@ public:
 	pair<int, int> getSecondRobotPos();
 	float calculateDistance(pair<int, int> from, pair<int, int> to);
 	void calculateAllCosts();
-	class compareQueueElements{
+	bool isInsideMap(Node n);
+	class compareNodes{
 		public:
-			bool operator()(pair<pair<int,int>,Node> a, pair<pair<int,int>,Node> b);
+		bool operator()(Node n1, Node n2);
 	};
-	//bool compareQueueElements(pair<pair<int,int>,Node> a, pair<pair<int,int>,Node> b);
-	priority_queue< pair<pair<int,int>,Node> , vector<pair<pair<int,int>,Node> >, compareQueueElements> openNodes;
-	priority_queue< pair<pair< int, int>,Node>, vector<pair<pair<int,int>,Node> >, compareQueueElements> closedNodes;
+	set<Node> getNeighbours(Node n);
+	vector<Node> executeAStar();
+	vector<Node> reconstructPath(Node to, Node from);
+	priority_queue<Node , vector<Node>, compareNodes> openNodes;
+	priority_queue<Node, vector<Node>, compareNodes> closedNodes;
 };
 
 #endif /* SQUAREGRAPH_H_ */
