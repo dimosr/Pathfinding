@@ -2,15 +2,25 @@
 #define SQUAREGRAPH_H_
 
 #include <vector>
+#include <math.h>
+#include "include/Node.h"
 using namespace std;
 
 class SquareGraph {
 private:
-	vector< vector< char > > map;
+	vector< vector< Node > > map;
+	pair<int, int> firstRobotPos;
+	pair<int, int> secondRobotPos;
 public:
 	SquareGraph(int dimension);
-	char getCellValue(int x, int y);
-	void setCellValue(int x, int y, char value);
+	Node getCellValue(pair<int, int> coord);
+	void setCellValue(pair<int, int> coord, char value);
+	void setFirstRobotPos(pair<int, int> coord);
+	void setSecondRobotPos(pair<int, int> coord);
+	pair<int, int> getFirstRobotPos();
+	pair<int, int> getSecondRobotPos();
+	float calculateDistance(pair<int, int> from, pair<int, int> to);
+	void calculateAllCosts();
 };
 
 #endif /* SQUAREGRAPH_H_ */
