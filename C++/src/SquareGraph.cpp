@@ -1,6 +1,6 @@
 #include "include/SquareGraph.h"
 
-SquareGraph::SquareGraph(int dimension): map(dimension, vector<Node>(dimension)) {
+SquareGraph::SquareGraph(int dimension): map(dimension, vector<Node>(dimension)), openNodes(), closedNodes() {
 }
 
 Node SquareGraph::getCellValue(pair<int, int> coord){
@@ -40,4 +40,8 @@ void SquareGraph::calculateAllCosts(){
 			map[i][j].calculateTotalCost();
 		}
 	}
+}
+
+int executeAStar(){
+
 }

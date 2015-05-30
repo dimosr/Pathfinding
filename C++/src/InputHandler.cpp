@@ -29,13 +29,6 @@ SquareGraph InputHandler::readMap(string filename) {
 					line.clear();
 			}
 			graph.calculateAllCosts();
-			for(int i=0; i<mapDimension; i++){
-				for(int j=0; j<mapDimension; j++){
-					cout << "Info for cell : (" << i << "," << j << ")" << endl;
-					Node node = graph.getCellValue(make_pair(i,j));
-					cout << "from start:" << node.getCostFromStart() << ", cost to target: " <<node.getCostToTarget() << ", total cost: " << node.getTotalCost() << ", state: " << node.getState() << ", type: " << node.getType() << endl;
-				}
-			}
 			inputFile.close();
 			return graph;
 		}

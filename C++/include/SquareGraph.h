@@ -2,6 +2,7 @@
 #define SQUAREGRAPH_H_
 
 #include <vector>
+#include <queue>
 #include <math.h>
 #include "include/Node.h"
 using namespace std;
@@ -11,6 +12,7 @@ private:
 	vector< vector< Node > > map;
 	pair<int, int> firstRobotPos;
 	pair<int, int> secondRobotPos;
+
 public:
 	SquareGraph(int dimension);
 	Node getCellValue(pair<int, int> coord);
@@ -21,6 +23,10 @@ public:
 	pair<int, int> getSecondRobotPos();
 	float calculateDistance(pair<int, int> from, pair<int, int> to);
 	void calculateAllCosts();
+	int executeAStar();
+
+	priority_queue<int> openNodes;
+	priority_queue<int> closedNodes;
 };
 
 #endif /* SQUAREGRAPH_H_ */
