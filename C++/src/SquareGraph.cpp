@@ -55,13 +55,16 @@ bool SquareGraph::isInsideMap(Node n){
 set<Node> SquareGraph::getNeighbours(Node n){
 	set<Node> neighbours;
 	Node temp;
-	list<int> values = {-1, 1};
+	list<int> values = {-1, 0, 1};
 
 	for(int i : values){
 		for(int j : values){
-			temp = getCellValue(make_pair((n.x+i), (n.y+j)));
-			if( (!temp.isObstacle()) && (isInsideMap(temp)) ){
-				neighbours.insert(temp);
+			if(!(i== 0 && j==0)){
+				temp = getCellValue(make_pair((n.x+i), (n.y+j)));
+				//cout << "temp : (" << temp.x << "," << temp.y << ") with obstacle : " << temp.getType() << ", inside: " << isInsideMap(temp) << endl;
+				if( (!temp.isObstacle()) && (isInsideMap(temp)) ){
+					neighbours.insert(temp);
+				}
 			}
 		}
 	}
@@ -96,7 +99,8 @@ vector<Node> SquareGraph::executeAStar(){
 	startNode.setOpen();
 	while(!openNodes.empty()){
 		currentNode = openNodes.top();
-		if(&currentNode == &targetNode){
+		cout << "current node : (" << currentNode.x << "," << currentNode.y << ")" << endl;
+		if( (currentNode.x == targetNode.x) && (currentNode.y == targetNode.y) ){
 			return reconstructPath(startNode, targetNode);
 		}
 
@@ -106,10 +110,19 @@ vector<Node> SquareGraph::executeAStar(){
 		neighbours = getNeighbours(currentNode);
 		for(auto i = neighbours.begin(); i != neighbours.end(); ++i){
 			Node neighbour = *i;
+			cout << "neighbour : (" << neighbour.x << "," << neighbour.y << ")" << endl;
 			if(!neighbour.isClosed()){
 				int tentativeScore = currentNode.getCostFromStart() + this->calculateDistance(make_pair(currentNode.x, currentNode.y), make_pair(neighbour.x, neighbour.y));
 				if( (!neighbour.isOpen()) || (tentativeScore < currentNode.getCostFromStart()) ){
+					cout << "0" << endl;
 					neighbour.setParent(currentNode);
+					neighbour.setCostFromStart(tentativeScore);
+					neighbour.setCostToTarget(this->calculateDistance(make_pair(neighbour.x, neighbour.y), target));
+					neighbour.calculateTotalCost();
+					if(!neighbour.isOpen()){
+						openNodes.push(neighbour);
+						neighbour.setOpen();
+					}
 				}
 			}
 		}

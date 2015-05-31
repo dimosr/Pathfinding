@@ -7,6 +7,7 @@
 #include <list>
 #include <queue>
 #include <math.h>
+#include <iostream>
 #include "include/Node.h"
 using namespace std;
 
