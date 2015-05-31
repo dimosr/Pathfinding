@@ -18,7 +18,7 @@ private:
 	pair<int, int> secondRobotPos;
 public:
 	SquareGraph(int dimension);
-	Node getCellValue(pair<int, int> coord);
+	Node* getCellValue(pair<int, int> coord);
 	void setCellValue(pair<int, int> coord, char value);
 	void setFirstRobotPos(pair<int, int> coord);
 	void setSecondRobotPos(pair<int, int> coord);

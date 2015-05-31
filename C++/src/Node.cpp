@@ -12,10 +12,10 @@ Node::Node(char type): costFromStart(0), costToTarget(0), totalCost(0), state(UN
 }
 
 Node::~Node() {
-	if(this->parent != nullptr){
+	/*if(this->parent != nullptr){
 		delete this->parent;
 		this->parent = nullptr;
-	}
+	}*/
 }
 
 void Node::calculateTotalCost(){
@@ -95,5 +95,18 @@ bool Node::isClosed(){
 }
 
 bool Node::operator<(const Node& n) const{
-	return ( this->totalCost > (n.totalCost) );
+	if(this->x < n.x){
+		return true;
+	}
+	else if(this->x > n.x){
+		return false;
+	}
+	else{
+		if(this->y < n.y){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
 }
