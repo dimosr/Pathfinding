@@ -34,6 +34,7 @@ public:
 	set<Node> getNeighbours(Node n);
 	vector<Node> executeAStar();
 	vector<Node> reconstructPath(Node* to, Node* from);
+	void printPath(vector<Node> path);
 	priority_queue<Node , vector<Node>, compareNodes> openNodes;
 	priority_queue<Node, vector<Node>, compareNodes> closedNodes;
 };

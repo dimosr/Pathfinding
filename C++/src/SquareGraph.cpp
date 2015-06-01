@@ -62,9 +62,7 @@ set<Node> SquareGraph::getNeighbours(Node n){
 			if(!(i== 0 && j==0)){
 				if( (isInsideMap(make_pair(n.x+i, n.y+j))) ){
 					temp = getCellValue(make_pair((n.x+i), (n.y+j)));
-					cout << "temp : (" << temp->x << "," << temp->y << ") with obstacle : " << temp->getType() << ", inside: " << isInsideMap(make_pair(i, j)) << ", state: " << temp->getState() << endl;
 					if( (!temp->isObstacle())){
-						cout << "existing: " << neighbours.count(*temp) << endl;
 						neighbours.insert(*temp);
 					}
 				}
@@ -79,18 +77,22 @@ vector<Node> SquareGraph::reconstructPath(Node* to, Node* from){
 	Node* tmp = from;
 	Node* parent;
 
-	cout << "Reconstructing began " << endl;
-
 	path.push_back(*tmp);
-	cout << "added node : (" << tmp->x << "," << tmp->y << ")" << endl;
 	while(tmp->getParent() != nullptr){
 		parent = (tmp->getParent());
 		path.push_back(*parent);
-		cout << "added node : (" << parent->x << "," << parent->y << ")" << endl;
 		tmp = parent;
 	}
 	reverse(path.begin(), path.end());
 	return path;
+}
+
+void SquareGraph::printPath(vector<Node> path){
+	cout << "--- Path to target ---" << endl;
+	for(auto i=path.begin(); i != path.end(); i++){
+		Node node = *i;
+		cout << "node : (" << node.x << "," << node.y << ")" << endl;
+	}
 }
 
 vector<Node> SquareGraph::executeAStar(){
@@ -107,7 +109,6 @@ vector<Node> SquareGraph::executeAStar(){
 	while(!openNodes.empty()){
 		currentNode = openNodes.top();
 		Node* currentPtr = getCellValue(make_pair(currentNode.x, currentNode.y));
-		cout << "current node : (" << currentPtr->x << "," << currentPtr->y << ")" << ", closed : " << currentPtr->getState() << endl;
 		if( (currentPtr->x == targetNodePtr->x) && (currentPtr->y == targetNodePtr->y) ){
 			return reconstructPath(startNodePtr, currentPtr);
 		}
@@ -115,12 +116,10 @@ vector<Node> SquareGraph::executeAStar(){
 		openNodes.pop();
 		closedNodes.push(*currentPtr);
 		currentPtr->setClosed();
-		cout << "closed: " << getCellValue(make_pair(currentPtr->x, currentPtr->y))->getState() << endl;
 		neighbours = getNeighbours(*currentPtr);
 		for(auto i = neighbours.begin(); i != neighbours.end(); ++i){
 			Node* neighbourPtr = getCellValue(make_pair(i->x, i->y));
 			if(!(neighbourPtr->isClosed())){
-				cout << "neighbour : (" << neighbourPtr->x << "," << neighbourPtr->y << ")" << endl;
 				int tentativeScore = currentNode.getCostFromStart() + this->calculateDistance(make_pair(currentPtr->x, currentPtr->y), make_pair(neighbourPtr->x, neighbourPtr->y));
 				if( (!neighbourPtr->isOpen()) || (tentativeScore < currentNode.getCostFromStart()) ){
 					neighbourPtr->setParent(currentPtr);

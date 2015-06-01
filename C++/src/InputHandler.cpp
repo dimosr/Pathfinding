@@ -28,27 +28,14 @@ SquareGraph InputHandler::readMap(string filename) {
 					}
 					line.clear();
 			}
-			/*graph.calculateAllCosts();
-			Node * temp1 = new Node();
-			temp1->setTotalCost(9);
-			temp1->x = 1;
-			temp1->y = 1;
-			Node * temp2 = new Node();
-			temp2->setTotalCost(3);
-			temp2->x = 2;
-			temp2->y = 2;
-			Node * temp3 = new Node();
-			temp3->setTotalCost(6);
-			temp3->x = 3;
-			temp3->y = 3;
-			graph.openNodes.push(*temp1);
-			graph.openNodes.push(*temp2);
-			graph.openNodes.push(*temp3);
-			cout << "top: " << graph.openNodes.top().x << endl;
-			graph.openNodes.pop();
-			cout << "top: " << graph.openNodes.top().x << endl;*/
 			vector<Node> path = graph.executeAStar();
-			cout << "moves" << path.size();
+			cout << "The total number of moves from distance to the target are : " << path.size() << endl;;
+			cout << "You want to see the whole path to the target ? (y/n) " << endl;
+			string response;
+			cin >> response;
+			if(response.compare("y") == 0 ){
+				graph.printPath(path);
+			}
 			inputFile.close();
 			return graph;
 		}
