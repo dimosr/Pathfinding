@@ -21,6 +21,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 #include <malloc.h>
 #include <time.h>
 #include <math.h>
@@ -421,7 +422,7 @@ int Robot1_Astar_move(int **map,int rows,int columns,int current_x1,int current_
 }
 
 
-int main(){
+int main(int argc, char *argv[]){
 
 	int columns,rows,**map,i,j,robot1_initial_x,robot1_initial_y,robot2_initial_x,robot2_initial_y;	
 	char symbol;
@@ -431,11 +432,22 @@ int main(){
 	SearchGraphNode **queue;
 	int queue_size,flag,x_moves[3],y_moves[3],current,total_nodes=0;
 	
+	char * filename;
 	FILE *fp;
 	
-	fp = fopen("input.txt","r");
+	if ( argc != 2 ){
+        printf( "usage: %s <filename> \n", argv[0] );
+        return 0;
+    }
+    else{
+    	char * filename = argv[1];
+    }
+
+    fp = fopen(argv[1],"r");
 	if(fp == NULL){
-		printf("The input file 'input.txt' does not exist in the working directory\n");
+		char cwd[1024];
+		getcwd(cwd, sizeof(cwd));
+		printf("The input file 'input.txt' does not exist in the working directory : %s \n", cwd);
 
 		printf("Press 'Enter' to terminate: ... ");
 		while ( getchar() != '\n')
