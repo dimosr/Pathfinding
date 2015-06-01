@@ -11,13 +11,6 @@ Node::Node(char type): costFromStart(0), costToTarget(0), totalCost(0), state(UN
 	this->parent = nullptr;
 }
 
-Node::~Node() {
-	/*if(this->parent != nullptr){
-		delete this->parent;
-		this->parent = nullptr;
-	}*/
-}
-
 void Node::calculateTotalCost(){
 	totalCost = costFromStart + costToTarget;
 }

@@ -12,7 +12,6 @@ public:
 
 	Node();
 	Node(char type);
-	virtual ~Node();
 	void calculateTotalCost();
 	float getCostFromStart();
 	float getCostToTarget();

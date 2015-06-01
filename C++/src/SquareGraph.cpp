@@ -59,7 +59,7 @@ set<Node> SquareGraph::getNeighbours(Node n){
 
 	for(int i : values){
 		for(int j : values){
-			if(!(i== 0 && j==0) && (i==0 || j==0)){
+			if(!(i== 0 && j==0)){
 				if( (isInsideMap(make_pair(n.x+i, n.y+j))) ){
 					temp = getCellValue(make_pair((n.x+i), (n.y+j)));
 					cout << "temp : (" << temp->x << "," << temp->y << ") with obstacle : " << temp->getType() << ", inside: " << isInsideMap(make_pair(i, j)) << ", state: " << temp->getState() << endl;
@@ -109,7 +109,7 @@ vector<Node> SquareGraph::executeAStar(){
 		Node* currentPtr = getCellValue(make_pair(currentNode.x, currentNode.y));
 		cout << "current node : (" << currentPtr->x << "," << currentPtr->y << ")" << ", closed : " << currentPtr->getState() << endl;
 		if( (currentPtr->x == targetNodePtr->x) && (currentPtr->y == targetNodePtr->y) ){
-			return reconstructPath(currentPtr, targetNodePtr);
+			return reconstructPath(startNodePtr, currentPtr);
 		}
 
 		openNodes.pop();
