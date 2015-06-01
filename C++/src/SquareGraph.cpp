@@ -59,7 +59,7 @@ set<Node> SquareGraph::getNeighbours(Node n){
 
 	for(int i : values){
 		for(int j : values){
-			if(!(i== 0 && j==0)){
+			if(!(i== 0 && j==0) && (i==0 || j==0)){
 				temp = getCellValue(make_pair((n.x+i), (n.y+j)));
 				cout << "temp : (" << temp->x << "," << temp->y << ") with obstacle : " << temp->getType() << ", inside: " << isInsideMap(*temp) << ", state: " << temp->getState() << endl;
 				if( (!temp->isObstacle()) && (isInsideMap(*temp)) ){
