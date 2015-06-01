@@ -38,8 +38,8 @@ Node * Node::getParent(){
 	return this->parent;
 }
 
-void Node::setParent(Node n){
-	this->parent = &n;
+void Node::setParent(Node* n){
+	this->parent = n;
 }
 
 Node::State Node::getState(){

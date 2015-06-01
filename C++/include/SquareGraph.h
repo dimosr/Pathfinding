@@ -26,14 +26,14 @@ public:
 	pair<int, int> getSecondRobotPos();
 	float calculateDistance(pair<int, int> from, pair<int, int> to);
 	void calculateAllCosts();
-	bool isInsideMap(Node n);
+	bool isInsideMap(pair<int, int> coord);
 	class compareNodes{
 		public:
 		bool operator()(Node n1, Node n2);
 	};
 	set<Node> getNeighbours(Node n);
 	vector<Node> executeAStar();
-	vector<Node> reconstructPath(Node to, Node from);
+	vector<Node> reconstructPath(Node* to, Node* from);
 	priority_queue<Node , vector<Node>, compareNodes> openNodes;
 	priority_queue<Node, vector<Node>, compareNodes> closedNodes;
 };

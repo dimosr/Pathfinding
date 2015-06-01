@@ -21,7 +21,7 @@ public:
 	void setCostToTarget(float cost);
 	void setTotalCost(float cost);
 	Node * getParent();
-	void setParent(Node n);
+	void setParent(Node* n);
 	State getState();
 	Type getType();
 	void setType(char type);
