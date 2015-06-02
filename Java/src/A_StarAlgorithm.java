@@ -21,8 +21,6 @@
 import java.io.*; 
 
 
-/*NOTICE:Coordinate i corresponds to y axis and Coordinate j corresponds to x axis*/
-
 public class A_StarAlgorithm {
 
 
@@ -74,25 +72,6 @@ public class A_StarAlgorithm {
 				}
 			}
 		}
-		
-		/*		Debugging for the initializations
-		System.out.println("The map is being printed");
-		for(i=0;i<dimension;i++){
-			for(j=0;j<dimension;j++){
-				System.out.format("%d",map[i][j]);
-			}
-			System.out.println("");
-		}
-
-		//Initialization of the nodes for A* graph
-		SearchGraphNode [][] nodes_map = new SearchGraphNode [dimension][dimension];
-		
-		for(i=0;i<dimension;i++){
-			for(j=0;j<dimension;j++){
-				nodes_map[i][j] = new SearchGraphNode(j,i,G_first_x,G_first_y);
-				System.out.format("element (%d,%d) : cost_h = %d\n",j,i,nodes_map[i][j].cost_h);
-			}
-		}*/
 
 
 		BinaryMinHeap_PriorityQueue myheap = new BinaryMinHeap_PriorityQueue(1);
@@ -102,69 +81,35 @@ public class A_StarAlgorithm {
 		myheap.insert(start_node.total_cost,start_node);
 		
 		while( (goal_found!=1) && (queue_empty!=1) ){			//while target-node not found, continue
-			extracted = myheap.extractMin();
-
-			/****************************** Extraction Debugging *****************************
-			System.out.format("The following node has been extracted from the heap: (x,y)=(%d,%d) with cost g=%d and cost h=%d\n",extracted.x,extracted.y,extracted.cost_g,extracted.cost_h);
-			System.out.println("Press Any Key To Continue...");
-          		new java.util.Scanner(System.in).nextLine();
-			***********************************************************************************/			
+			extracted = myheap.extractMin();		
 
           		if(extracted == null) queue_empty=1;
 			else if( (extracted.x == G_first_x ) && (extracted.y == G_first_y)  )	goal_found=1;	
 			else{		//extending the extracted node and putting the neighbours in the heap
 				if( (extracted.is_not_visited(map,extracted.x-1,extracted.y,dimension)!=0) && (extracted.is_not_hinder(closed,extracted.x-1,extracted.y,dimension)!=1) ){   //upside
-					SearchGraphNode inserted = new SearchGraphNode(extracted.x-1,extracted.y,G_first_x,G_first_y,extracted.cost_g+2);
+					SearchGraphNode inserted = new SearchGraphNode(extracted.x-1,extracted.y,G_first_x,G_first_y,extracted.costFromStart+2);
 					myheap.insert(inserted.total_cost,inserted);
 					closed[inserted.x][inserted.y]=1;
-
-					/****************************** Insertion Debugging *****************************
-					System.out.format("The following node has been inserted in the heap : 
-										(x,y)=(%d,%d) with cost g=%d and cost h=%d\n",inserted.x,inserted.y,inserted.cost_g,inserted.cost_h);
-					System.out.println("Press Any Key To Continue...");
-          				new java.util.Scanner(System.in).nextLine();
-					***********************************************************************************/
 				}
 				if( (extracted.is_not_visited(map,extracted.x+1,extracted.y,dimension)!=0) && (extracted.is_not_hinder(closed,extracted.x+1,extracted.y,dimension)!=1) ){   //downside
-					SearchGraphNode inserted2 = new SearchGraphNode(extracted.x+1,extracted.y,G_first_x,G_first_y,extracted.cost_g);
+					SearchGraphNode inserted2 = new SearchGraphNode(extracted.x+1,extracted.y,G_first_x,G_first_y,extracted.costFromStart);
 					myheap.insert(inserted2.total_cost,inserted2);
 					closed[inserted2.x][inserted2.y]=1;
-
-					/****************************** Insertion Debugging *****************************
-					System.out.format("The following node has been inserted in the heap : 
-										(x,y)=(%d,%d) with cost g=%d and cost h=%d\n",inserted.x,inserted.y,inserted.cost_g,inserted.cost_h);
-					System.out.println("Press Any Key To Continue...");
-          				new java.util.Scanner(System.in).nextLine();
-					***********************************************************************************/
 				}
 				if( (extracted.is_not_visited(map,extracted.x,extracted.y-1,dimension)!=0) && (extracted.is_not_hinder(closed,extracted.x,extracted.y-1,dimension)!=1) ){   //leftside	
-					SearchGraphNode inserted3 = new SearchGraphNode(extracted.x,extracted.y-1,G_first_x,G_first_y,extracted.cost_g+1);
+					SearchGraphNode inserted3 = new SearchGraphNode(extracted.x,extracted.y-1,G_first_x,G_first_y,extracted.costFromStart+1);
 					myheap.insert(inserted3.total_cost,inserted3);
 					closed[inserted3.x][inserted3.y]=1;
-
-					/****************************** Insertion Debugging *****************************
-					System.out.format("The following node has been inserted in the heap : 
-										(x,y)=(%d,%d) with cost g=%d and cost h=%d\n",inserted.x,inserted.y,inserted.cost_g,inserted.cost_h);
-					System.out.println("Press Any Key To Continue...");
-          				new java.util.Scanner(System.in).nextLine();
-					***********************************************************************************/
 				}
 				if( (extracted.is_not_visited(map,extracted.x,extracted.y+1,dimension)!=0) && (extracted.is_not_hinder(closed,extracted.x,extracted.y+1,dimension)!=1) ){   //rightside	
-					SearchGraphNode inserted4 = new SearchGraphNode(extracted.x,extracted.y+1,G_first_x,G_first_y,extracted.cost_g+1);
+					SearchGraphNode inserted4 = new SearchGraphNode(extracted.x,extracted.y+1,G_first_x,G_first_y,extracted.costFromStart+1);
 					myheap.insert(inserted4.total_cost,inserted4);
 					closed[inserted4.x][inserted4.y]=1;
-
-					/****************************** Insertion Debugging *****************************
-					System.out.format("The following node has been inserted in the heap : 
-										(x,y)=(%d,%d) with cost g=%d and cost h=%d\n",inserted.x,inserted.y,inserted.cost_g,inserted.cost_h);
-					System.out.println("Press Any Key To Continue...");
-          				new java.util.Scanner(System.in).nextLine();
-					***********************************************************************************/
 				}
 
 			}
 		}
-		if (queue_empty!=1)	System.out.format("Sum of moves to reach target : %d\n",extracted.cost_g);
+		if (queue_empty!=1)	System.out.format("Sum of moves to reach target : %d\n",extracted.costFromStart);
 		else System.out.println("-1");
 	}
 	

@@ -19,8 +19,8 @@
 
 class SearchGraphNode
 {
-	int cost_g;
-	int cost_h;
+	int costFromStart;
+	int costToTarget;
 	int total_cost;
 	SearchGraphNode parent;
 	int node_state;
@@ -29,31 +29,31 @@ class SearchGraphNode
 
 	public void UpdateCosts()
 	{
-		this.total_cost = (this.cost_g + this.cost_h);
+		this.total_cost = (this.costFromStart + this.costToTarget);
 	}
 
-	public SearchGraphNode(int paramInt1, int paramInt2, int paramInt3, int paramInt4, int paramInt5)
+	public SearchGraphNode(int x, int y, int targetX, int targetY, int costFromStart)
 	{
-		this.cost_g = paramInt5;
-		Distance_Evalutation(paramInt1, paramInt2, paramInt3, paramInt4);
+		this.costFromStart = costFromStart;
+		Distance_Evalutation(x, y, targetX, targetY);
 		UpdateCosts();
 		this.parent = null;
 		this.node_state = 0;
-		this.x = paramInt1;
-		this.y = paramInt2;
+		this.x = x;
+		this.y = y;
 	}
 
-	public void Distance_Evalutation(int paramInt1, int paramInt2, int paramInt3, int paramInt4)
+	public void Distance_Evalutation(int fromX, int fromY, int toX, int toY)
 	{
 		int i;
-		if (paramInt1 <= paramInt3) {
+		if (fromX <= toX) {
 			i = 0;
 		} else {
-			i = 2 * (paramInt1 - paramInt3);
+			i = 2 * (fromX - toX);
 		}
-		int j = Math.abs(paramInt4 - paramInt2);
+		int j = Math.abs(toY - fromY);
 
-		this.cost_h = (i + j);
+		this.costToTarget = (i + j);
 	}
 
 	public int is_not_visited(int[][] paramArrayOfInt, int paramInt1, int paramInt2, int paramInt3)
