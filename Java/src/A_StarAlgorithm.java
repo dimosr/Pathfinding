@@ -32,7 +32,7 @@ public class A_StarAlgorithm {
 		int dimension,i,j,T_first_x=0,T_first_y=0,G_first_x=0,G_first_y=0;
 		char letter;
 		int goal_found = 0,queue_empty=0;		//When found in A*, the target-node will become 1 (true)
-		SearchGraphNode extracted = null ;		//the node that will be extracted at each step
+		Node extracted = null ;		//the node that will be extracted at each step
 		
 	
 	
@@ -76,7 +76,7 @@ public class A_StarAlgorithm {
 
 		BinaryMinHeap_PriorityQueue myheap = new BinaryMinHeap_PriorityQueue(1);
 		
-		SearchGraphNode start_node = new SearchGraphNode(T_first_x,T_first_y,G_first_x,G_first_y,0);
+		Node start_node = new Node(T_first_x,T_first_y,G_first_x,G_first_y,0);
 		closed[T_first_x][T_first_y]=1;
 		myheap.insert(start_node.total_cost,start_node);
 		
@@ -87,22 +87,22 @@ public class A_StarAlgorithm {
 			else if( (extracted.x == G_first_x ) && (extracted.y == G_first_y)  )	goal_found=1;	
 			else{		//extending the extracted node and putting the neighbours in the heap
 				if( (extracted.is_not_visited(map,extracted.x-1,extracted.y,dimension)!=0) && (extracted.is_not_hinder(closed,extracted.x-1,extracted.y,dimension)!=1) ){   //upside
-					SearchGraphNode inserted = new SearchGraphNode(extracted.x-1,extracted.y,G_first_x,G_first_y,extracted.costFromStart+2);
+					Node inserted = new Node(extracted.x-1,extracted.y,G_first_x,G_first_y,extracted.costFromStart+2);
 					myheap.insert(inserted.total_cost,inserted);
 					closed[inserted.x][inserted.y]=1;
 				}
 				if( (extracted.is_not_visited(map,extracted.x+1,extracted.y,dimension)!=0) && (extracted.is_not_hinder(closed,extracted.x+1,extracted.y,dimension)!=1) ){   //downside
-					SearchGraphNode inserted2 = new SearchGraphNode(extracted.x+1,extracted.y,G_first_x,G_first_y,extracted.costFromStart);
+					Node inserted2 = new Node(extracted.x+1,extracted.y,G_first_x,G_first_y,extracted.costFromStart);
 					myheap.insert(inserted2.total_cost,inserted2);
 					closed[inserted2.x][inserted2.y]=1;
 				}
 				if( (extracted.is_not_visited(map,extracted.x,extracted.y-1,dimension)!=0) && (extracted.is_not_hinder(closed,extracted.x,extracted.y-1,dimension)!=1) ){   //leftside	
-					SearchGraphNode inserted3 = new SearchGraphNode(extracted.x,extracted.y-1,G_first_x,G_first_y,extracted.costFromStart+1);
+					Node inserted3 = new Node(extracted.x,extracted.y-1,G_first_x,G_first_y,extracted.costFromStart+1);
 					myheap.insert(inserted3.total_cost,inserted3);
 					closed[inserted3.x][inserted3.y]=1;
 				}
 				if( (extracted.is_not_visited(map,extracted.x,extracted.y+1,dimension)!=0) && (extracted.is_not_hinder(closed,extracted.x,extracted.y+1,dimension)!=1) ){   //rightside	
-					SearchGraphNode inserted4 = new SearchGraphNode(extracted.x,extracted.y+1,G_first_x,G_first_y,extracted.costFromStart+1);
+					Node inserted4 = new Node(extracted.x,extracted.y+1,G_first_x,G_first_y,extracted.costFromStart+1);
 					myheap.insert(inserted4.total_cost,inserted4);
 					closed[inserted4.x][inserted4.y]=1;
 				}

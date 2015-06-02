@@ -17,12 +17,12 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	**************************************************/
 
-class SearchGraphNode
+class Node
 {
 	int costFromStart;
 	int costToTarget;
 	int total_cost;
-	SearchGraphNode parent;
+	Node parent;
 	int node_state;
 	int x;
 	int y;
@@ -32,7 +32,7 @@ class SearchGraphNode
 		this.total_cost = (this.costFromStart + this.costToTarget);
 	}
 
-	public SearchGraphNode(int x, int y, int targetX, int targetY, int costFromStart)
+	public Node(int x, int y, int targetX, int targetY, int costFromStart)
 	{
 		this.costFromStart = costFromStart;
 		Distance_Evalutation(x, y, targetX, targetY);

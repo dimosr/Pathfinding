@@ -29,13 +29,13 @@ public class BinaryMinHeap_PriorityQueue {
      
     int[] data;
     int heapSize;
-    SearchGraphNode[] node;
+    Node[] node;
      
     public BinaryMinHeap_PriorityQueue(int size) {
 	int i;
 	
         data = new int[size];
-	node = new SearchGraphNode[size];
+	node = new Node[size];
         heapSize = 0;
 	for(i=0;i<size;i++)	node[i] = null;
     }
@@ -53,12 +53,12 @@ public class BinaryMinHeap_PriorityQueue {
         return (int) (nodeIndex - 1)/2;
     }
      
-    public void insert (int value,SearchGraphNode new_node) throws HeapException {
+    public void insert (int value,Node new_node) throws HeapException {
         if(heapSize == data.length){
             //throw new HeapException("Heap Overflow");
 	    BinaryMinHeap_PriorityQueue new_heap = new BinaryMinHeap_PriorityQueue(heapSize+1);
 	    int[] copied_data =new int [heapSize+1];
-	    SearchGraphNode[] copied_node =new SearchGraphNode[heapSize+1];
+	    Node[] copied_node =new Node[heapSize+1];
 	    System.arraycopy(this.data,0,copied_data,0,this.data.length);
 	    System.arraycopy(this.node,0,copied_node,0,this.node.length);
 	    this.data = copied_data;
@@ -81,7 +81,7 @@ public class BinaryMinHeap_PriorityQueue {
             int tmp = data[indexOfParent];
             data[indexOfParent] = data[nodeIndex];
             data[nodeIndex] = tmp;
-	    SearchGraphNode tmp2 = node[indexOfParent];
+	    Node tmp2 = node[indexOfParent];
 	    node[indexOfParent] = node[nodeIndex];
 	    node[nodeIndex] = tmp2; 
             nodeIndex = indexOfParent;
@@ -111,10 +111,10 @@ public class BinaryMinHeap_PriorityQueue {
  
     }
      
-    public SearchGraphNode extractMin() {
+    public Node extractMin() {
         int min = data[0];
         if(heapSize == 0) return null;
-	SearchGraphNode extracted_node = this.node[0];
+	Node extracted_node = this.node[0];
         removeMin();
 	//System.out.format("Evgala apo to heap ton komvo me timi : %d",min);
         return extracted_node;
@@ -147,7 +147,7 @@ public class BinaryMinHeap_PriorityQueue {
             int tmp = data[nodeIndex];
             data[nodeIndex] = data[smallerValueIndex];
             data[smallerValueIndex] = tmp;
-	    SearchGraphNode temp2 = node[nodeIndex];
+	    Node temp2 = node[nodeIndex];
 	    node[nodeIndex] = node[smallerValueIndex];
 	    node[smallerValueIndex] = temp2;
             nodeIndex = smallerValueIndex;
@@ -156,7 +156,7 @@ public class BinaryMinHeap_PriorityQueue {
     }
      
  
-    public void makeHeap(int[] array,SearchGraphNode[] map) throws HeapException {
+    public void makeHeap(int[] array,Node[] map) throws HeapException {
         for (int i = 0; i < array.length; i++) {
             this.insert(array[i],map[i]);
         }
