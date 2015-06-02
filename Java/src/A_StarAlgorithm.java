@@ -74,7 +74,7 @@ public class A_StarAlgorithm {
 		}
 
 
-		BinaryMinHeap_PriorityQueue myheap = new BinaryMinHeap_PriorityQueue(1);
+		Heap myheap = new Heap(1);
 		
 		Node start_node = new Node(T_first_x,T_first_y,G_first_x,G_first_y,0);
 		closed[T_first_x][T_first_y]=1;

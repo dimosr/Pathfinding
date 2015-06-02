@@ -21,23 +21,19 @@
 import static java.lang.System.*;
  
  
-public class BinaryMinHeap_PriorityQueue {
-     
-	public static void main(String[] args){
-		System.out.println("I am working");
-	}	
+public class Heap {
      
     int[] data;
     int heapSize;
     Node[] node;
      
-    public BinaryMinHeap_PriorityQueue(int size) {
-	int i;
-	
-        data = new int[size];
-	node = new Node[size];
+    public Heap(int size) {
+    	int i;
+    	data = new int[size];
+    	node = new Node[size];
         heapSize = 0;
-	for(i=0;i<size;i++)	node[i] = null;
+        for(i=0;i<size;i++)	
+        	node[i] = null;
     }
          
      
@@ -56,20 +52,20 @@ public class BinaryMinHeap_PriorityQueue {
     public void insert (int value,Node new_node) throws HeapException {
         if(heapSize == data.length){
             //throw new HeapException("Heap Overflow");
-	    BinaryMinHeap_PriorityQueue new_heap = new BinaryMinHeap_PriorityQueue(heapSize+1);
-	    int[] copied_data =new int [heapSize+1];
-	    Node[] copied_node =new Node[heapSize+1];
-	    System.arraycopy(this.data,0,copied_data,0,this.data.length);
-	    System.arraycopy(this.node,0,copied_node,0,this.node.length);
-	    this.data = copied_data;
-	    this.node = copied_node;
-	}
-	if(new_node == null)
-	    throw new HeapException("Heap Overflow");
+            Heap new_heap = new Heap(heapSize+1);
+            int[] copied_data =new int [heapSize+1];
+            Node[] copied_node =new Node[heapSize+1];
+            System.arraycopy(this.data,0,copied_data,0,this.data.length);
+            System.arraycopy(this.node,0,copied_node,0,this.node.length);
+            this.data = copied_data;
+            this.node = copied_node;
+        }
+        if(new_node == null)
+        	throw new HeapException("Heap Overflow");
         heapSize++;
         int currentIndex = heapSize - 1;
         data[currentIndex] = value;
-	this.node[currentIndex] = new_node;
+        this.node[currentIndex] = new_node;
         bubbleUP(currentIndex);
     }
      
@@ -81,9 +77,9 @@ public class BinaryMinHeap_PriorityQueue {
             int tmp = data[indexOfParent];
             data[indexOfParent] = data[nodeIndex];
             data[nodeIndex] = tmp;
-	    Node tmp2 = node[indexOfParent];
-	    node[indexOfParent] = node[nodeIndex];
-	    node[nodeIndex] = tmp2; 
+            Node tmp2 = node[indexOfParent];
+            node[indexOfParent] = node[nodeIndex];
+            node[nodeIndex] = tmp2; 
             nodeIndex = indexOfParent;
             bubbleUP(nodeIndex);
         } else
@@ -113,10 +109,10 @@ public class BinaryMinHeap_PriorityQueue {
      
     public Node extractMin() {
         int min = data[0];
-        if(heapSize == 0) return null;
-	Node extracted_node = this.node[0];
+        if(heapSize == 0) 
+        	return null;
+        Node extracted_node = this.node[0];
         removeMin();
-	//System.out.format("Evgala apo to heap ton komvo me timi : %d",min);
         return extracted_node;
     }
      
@@ -124,7 +120,7 @@ public class BinaryMinHeap_PriorityQueue {
         if(heapSize == 0)
             return;
         data[0] = data[heapSize -1];
-	node[0] = node[heapSize-1];
+        node[0] = node[heapSize-1];
         heapSize--;
         if(heapSize > 0)
             bubbleDOWN(0);
@@ -147,9 +143,9 @@ public class BinaryMinHeap_PriorityQueue {
             int tmp = data[nodeIndex];
             data[nodeIndex] = data[smallerValueIndex];
             data[smallerValueIndex] = tmp;
-	    Node temp2 = node[nodeIndex];
-	    node[nodeIndex] = node[smallerValueIndex];
-	    node[smallerValueIndex] = temp2;
+            Node temp2 = node[nodeIndex];
+	    	node[nodeIndex] = node[smallerValueIndex];
+	    	node[smallerValueIndex] = temp2;
             nodeIndex = smallerValueIndex;
             bubbleDOWN(nodeIndex);
         }
@@ -161,11 +157,11 @@ public class BinaryMinHeap_PriorityQueue {
             this.insert(array[i],map[i]);
         }
     }
-     
+    
+    public static void main(String[] args){
+		System.out.println("I am working");
+	}	
 }
- 
- 
- 
  
 class HeapException extends Exception {
     public HeapException(String message) {
