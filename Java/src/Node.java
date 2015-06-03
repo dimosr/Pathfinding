@@ -96,6 +96,10 @@ class Node implements Comparable<Node>{
 		return this.state == State.OPEN;
 	}
 	
+	public boolean isClosed(){
+		return this.state == State.CLOSED;
+	}
+	
 	public void setOpen(){
 		this.state = State.OPEN;
 	}

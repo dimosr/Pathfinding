@@ -110,11 +110,18 @@ public class SquareGraph {
 		Node current = target;
 		
 		while(current.getParent() != null){
-			path.add(target.getParent());
+			path.add(current.getParent());
 			current = current.getParent();
 		}
 		Collections.reverse(path);
 		return path;
+	}
+	
+	public void printPath(ArrayList<Node> path){
+		for(int i=0; i<path.size(); i++){
+			Node node = path.get(i);
+			System.out.println("node : (" + node.getX() + "," + node.getY() + ")");
+		}
 	}
 	
 	public ArrayList<Node> executeAStar(){
@@ -133,7 +140,7 @@ public class SquareGraph {
 			addToClosedNodes(current);
 			Set<Node> neighbours = getNeighbours(current);
 			for(Node neighbour : neighbours){
-				if(!closedNodes.contains(neighbours)){
+				if(!neighbour.isClosed()){
 					double tentativeCost = current.getCostFromStart() + calculateDistance(current.getPosition(), neighbour.getPosition());
 					
 					if( (!neighbour.isOpen()) || (tentativeCost < neighbour.getCostFromStart()) ){

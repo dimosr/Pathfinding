@@ -21,6 +21,7 @@
 import java.awt.Point;
 import java.io.*; 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 
 public class A_StarAlgorithm {
@@ -44,7 +45,14 @@ public class A_StarAlgorithm {
 				System.out.println("There is no path to target");
 			}
 			else{
-				System.out.println("Number of moves : " + path.size());
+				System.out.println("The total number of moves from distance to the target are : " + path.size());
+				System.out.println("You want to see the whole path to the target ? (y/n) ");
+				Scanner scanner = new Scanner(System.in);
+				String response = scanner.nextLine();
+				if(response.equals("y")){
+					System.out.println("--- Path to target ---");
+					graph.printPath(path);
+				}
 			}
 		}
 	}
