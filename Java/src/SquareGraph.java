@@ -56,11 +56,11 @@ public class SquareGraph {
 	}
 	
 	public void setStartPosition(Point coord){
-		targetPosition.setLocation(coord);
+		startPosition.setLocation(coord);
 	}
 	
 	public void setTargetPosition(Point coord){
-		startPosition.setLocation(coord);
+		targetPosition.setLocation(coord);
 	}
 	
 	public int getDimension(){
@@ -82,17 +82,17 @@ public class SquareGraph {
 	}
 	
 	public boolean isInsideMap(Point p){
-		return ( (p.getX() > 0) && (p.getX() < getDimension())  && (p.getY() > 0) && (p.getY() < getDimension()) );
+		return ( (p.getX() >= 0) && (p.getX() < getDimension())  && (p.getY() >= 0) && (p.getY() < getDimension()) );
 	}
 	
 	public Set<Node> getNeighbours(Node n){
 		Set<Node> neighbours = new HashSet<Node>();
-		for(int i=-1; i<1; i++){
-			for(int j=-1; j<1; j++){
+		for(int i=-1; i<=1; i++){
+			for(int j=-1; j<=1; j++){
 				if( !(i==0 && j==0) )
-					if(isInsideMap(new Point(i,j))){
-						Node temp = getMapCell(new Point(i, j));
-						if(!n.isObstacle())
+					if(isInsideMap(new Point(n.getX() + i,n.getY() + j))){
+						Node temp = getMapCell(new Point(n.getX() + i,n.getY() +  j));
+						if(!temp.isObstacle())
 							neighbours.add(temp);
 					}
 					
@@ -123,7 +123,7 @@ public class SquareGraph {
 		addToOpenNodes(start);
 		
 		start.setCostFromStart(0);
-		start.setCostToTarget( start.getCostFromStart() + calculateDistance(start.getPosition(), target.getPosition()) );
+		start.setTotalCost( start.getCostFromStart() + calculateDistance(start.getPosition(), target.getPosition()) );
 		while(!openNodes.isEmpty()){
 			Node current = popBestOpenNode();
 			if(current.equals(target)){
@@ -136,10 +136,10 @@ public class SquareGraph {
 				if(!closedNodes.contains(neighbours)){
 					double tentativeCost = current.getCostFromStart() + calculateDistance(current.getPosition(), neighbour.getPosition());
 					
-					if( (neighbour.isOpen()) || (tentativeCost < neighbour.getCostFromStart()) ){
+					if( (!neighbour.isOpen()) || (tentativeCost < neighbour.getCostFromStart()) ){
 						neighbour.setParent(current);
 						neighbour.setCostFromStart(tentativeCost);
-						neighbour.setCostToTarget(neighbour.getCostFromStart() + calculateDistance(neighbour.getPosition(), start.getPosition()));
+						neighbour.setTotalCost(neighbour.getCostFromStart() + calculateDistance(neighbour.getPosition(), start.getPosition()));
 						if(!neighbour.isOpen())
 							addToOpenNodes(neighbour);
 					}
@@ -147,6 +147,8 @@ public class SquareGraph {
 					
 			}
 		}
+		
+		return null;
 	}
 	
 }

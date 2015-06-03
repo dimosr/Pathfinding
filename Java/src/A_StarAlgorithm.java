@@ -20,6 +20,7 @@
 
 import java.awt.Point;
 import java.io.*; 
+import java.util.ArrayList;
 
 
 public class A_StarAlgorithm {
@@ -37,7 +38,14 @@ public class A_StarAlgorithm {
 			InputHandler handler = new InputHandler();
 			SquareGraph graph = handler.readMap(filename);
 			
-			graph.executeAStar();
+			ArrayList<Node> path = graph.executeAStar();
+			
+			if(path == null){
+				System.out.println("There is no path to target");
+			}
+			else{
+				System.out.println("Number of moves : " + path.size());
+			}
 		}
 	}
 	

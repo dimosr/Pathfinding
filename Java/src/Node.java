@@ -104,6 +104,14 @@ class Node implements Comparable<Node>{
 		this.state = State.CLOSED;
 	}
 	
+	public int getX(){
+		return x;
+	}
+	
+	public int getY(){
+		return y;
+	}
+	
 	@Override
 	public int compareTo(Node n){
 		if(this.getTotalCost() < n.getTotalCost()){
