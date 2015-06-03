@@ -21,15 +21,13 @@ import java.io.*;
 
 public class InputHandler {
 	
-	public SquareGraph readMap(String filename) throws IOException{
+	public SquareGraph readMap(String filename) throws IOException, InvalidLetterException{
 		
 		File file = new File(filename);
-		BufferedReader in;
+		BufferedReader in = new BufferedReader(new FileReader(filename));;
 		
 
 		try{
-			
-			in = new BufferedReader(new FileReader(filename));
 			
 			String dimension =in.readLine();
 			int mapDimension = Integer.parseInt(dimension);
@@ -58,6 +56,9 @@ public class InputHandler {
 						Node n = new Node(i,j, "NORMAL");
 						graph.setMapCell(new Point(i,j), n);
 						graph.setTargetPosition(new Point(i,j));
+					}
+					else{
+						throw new InvalidLetterException("There was a wrong character in the text file.The character must be X, ,T or G.");
 					}
 				}
 			}

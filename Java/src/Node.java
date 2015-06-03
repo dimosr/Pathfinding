@@ -62,29 +62,4 @@ class Node
 		this.costToTarget = (i + j);
 	}
 
-	public int is_not_visited(int[][] paramArrayOfInt, int paramInt1, int paramInt2, int paramInt3){
-		if ((paramInt1 <= 0) || (paramInt1 >= paramInt3)) {
-			return 0;
-		}
-		if ((paramInt2 <= 0) || (paramInt2 >= paramInt3)) {
-			return 0;
-		}
-		if (paramArrayOfInt[paramInt1][paramInt2] != 1) {
-			return 0;
-		}
-		return 1;
-	}
-
-	public int is_not_hinder(int[][] paramArrayOfInt, int paramInt1, int paramInt2, int paramInt3){
-		if ((paramInt1 <= 0) || (paramInt1 >= paramInt3)) {
-			return 1;
-		}
-		if ((paramInt2 <= 0) || (paramInt2 >= paramInt3)) {
-			return 1;
-		}
-		if (paramArrayOfInt[paramInt1][paramInt2] != 0) {
-			return 1;
-		}
-		return 0;
-	}
 }

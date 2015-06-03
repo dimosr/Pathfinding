@@ -54,6 +54,8 @@ public class SquareGraph {
 	public void setTargetPosition(Point coord){
 		startPosition.setLocation(coord);
 	}
-	
+	public int getDimension(){
+		return map.length;
+	}
 	
 }
