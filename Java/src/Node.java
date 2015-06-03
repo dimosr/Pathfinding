@@ -19,32 +19,38 @@
 
 class Node
 {
+	private enum State{
+		UNVISITED, OPEN, CLOSED
+	}
+	private enum Type{
+		NORMAL, OBSTACLE
+	}
+	
 	int costFromStart;
 	int costToTarget;
-	int total_cost;
+	int totalCost;
 	Node parent;
-	int node_state;
+	State state;
+	Type type;
 	int x;
 	int y;
 
-	public void UpdateCosts()
-	{
-		this.total_cost = (this.costFromStart + this.costToTarget);
+	public void UpdateCosts(){
+		this.totalCost = (this.costFromStart + this.costToTarget);
 	}
 
-	public Node(int x, int y, int targetX, int targetY, int costFromStart)
-	{
-		this.costFromStart = costFromStart;
-		Distance_Evalutation(x, y, targetX, targetY);
-		UpdateCosts();
+	public Node(int x, int y, String type){
+		this.costFromStart = 0;
+		this.costToTarget = 0;
+		this.totalCost = 0;
 		this.parent = null;
-		this.node_state = 0;
+		this.state = State.UNVISITED;
+		this.type = Type.valueOf(type);
 		this.x = x;
 		this.y = y;
 	}
 
-	public void Distance_Evalutation(int fromX, int fromY, int toX, int toY)
-	{
+	public void Distance_Evalutation(int fromX, int fromY, int toX, int toY){
 		int i;
 		if (fromX <= toX) {
 			i = 0;
@@ -56,8 +62,7 @@ class Node
 		this.costToTarget = (i + j);
 	}
 
-	public int is_not_visited(int[][] paramArrayOfInt, int paramInt1, int paramInt2, int paramInt3)
-	{
+	public int is_not_visited(int[][] paramArrayOfInt, int paramInt1, int paramInt2, int paramInt3){
 		if ((paramInt1 <= 0) || (paramInt1 >= paramInt3)) {
 			return 0;
 		}
@@ -70,8 +75,7 @@ class Node
 		return 1;
 	}
 
-	public int is_not_hinder(int[][] paramArrayOfInt, int paramInt1, int paramInt2, int paramInt3)
-	{
+	public int is_not_hinder(int[][] paramArrayOfInt, int paramInt1, int paramInt2, int paramInt3){
 		if ((paramInt1 <= 0) || (paramInt1 >= paramInt3)) {
 			return 1;
 		}
