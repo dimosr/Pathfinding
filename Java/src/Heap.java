@@ -17,150 +17,138 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	**************************************************/
 
+import java.util.Arrays;
+import java.util.PriorityQueue;
 
-import static java.lang.System.*;
- 
- 
-public class Heap {
-     
-    int[] data;
-    int heapSize;
-    Node[] node;
-     
-    public Heap(int size) {
-    	int i;
-    	data = new int[size];
-    	node = new Node[size];
-        heapSize = 0;
-        for(i=0;i<size;i++)	
-        	node[i] = null;
-    }
-         
-     
-    public int getLeftChildindex(int nodeIndex) {
-        return (2 * nodeIndex) + 1;
-    }
-     
-    public int getRightChildindex(int nodeIndex) {
-        return (2 * nodeIndex) + 2;
-    }
-     
-    public int getParentindex(int nodeIndex) {
-        return (int) (nodeIndex - 1)/2;
-    }
-     
-    public void insert (int value,Node new_node) throws HeapException {
-        if(heapSize == data.length){
-            //throw new HeapException("Heap Overflow");
-            Heap new_heap = new Heap(heapSize+1);
-            int[] copied_data =new int [heapSize+1];
-            Node[] copied_node =new Node[heapSize+1];
-            System.arraycopy(this.data,0,copied_data,0,this.data.length);
-            System.arraycopy(this.node,0,copied_node,0,this.node.length);
-            this.data = copied_data;
-            this.node = copied_node;
-        }
-        if(new_node == null)
-        	throw new HeapException("Heap Overflow");
-        heapSize++;
-        int currentIndex = heapSize - 1;
-        data[currentIndex] = value;
-        this.node[currentIndex] = new_node;
-        bubbleUP(currentIndex);
-    }
-     
-    public void bubbleUP(int nodeIndex) {
-        if(nodeIndex == 0)
-            return;
-        int indexOfParent = getParentindex(nodeIndex);
-        if((data[indexOfParent] > data[nodeIndex]) && indexOfParent >= 0) {
-            int tmp = data[indexOfParent];
-            data[indexOfParent] = data[nodeIndex];
-            data[nodeIndex] = tmp;
-            Node tmp2 = node[indexOfParent];
-            node[indexOfParent] = node[nodeIndex];
-            node[nodeIndex] = tmp2; 
-            nodeIndex = indexOfParent;
-            bubbleUP(nodeIndex);
-        } else
-            return;
-    }
-     
-     
-    public void insertWithoutRecursion(int value) {
-         
-        heapSize++;
-         
-        int currentIndex = heapSize - 1;
-        data[currentIndex] = value;
-         
-        int tmp;
-        int indexOfParent = getParentindex(currentIndex);
-         
-        while ((data[indexOfParent] > data[currentIndex]) && indexOfParent >= 0) {
-            tmp = data[indexOfParent];
-            data[indexOfParent] = data[currentIndex];
-            data[currentIndex] = tmp;
-            currentIndex = indexOfParent;
-            indexOfParent = getParentindex(currentIndex);
-        }
- 
-    }
-     
-    public Node extractMin() {
-        int min = data[0];
-        if(heapSize == 0) 
-        	return null;
-        Node extracted_node = this.node[0];
-        removeMin();
-        return extracted_node;
-    }
-     
-    public void removeMin() {
-        if(heapSize == 0)
-            return;
-        data[0] = data[heapSize -1];
-        node[0] = node[heapSize-1];
-        heapSize--;
-        if(heapSize > 0)
-            bubbleDOWN(0);
-    }
- 
-    public void bubbleDOWN(int nodeIndex) {
-        int leftChildIndex = getLeftChildindex(nodeIndex);
-        int rightChildIndex = getRightChildindex(nodeIndex);
-        int smallerValueIndex = -1;
-        if (leftChildIndex < heapSize && rightChildIndex < heapSize) {
-            smallerValueIndex = (data[leftChildIndex] - data[rightChildIndex]) < 0 ? leftChildIndex : rightChildIndex;
-        } else if (leftChildIndex < heapSize) {
-            smallerValueIndex = leftChildIndex;
-        } else if (rightChildIndex < heapSize) {
-            smallerValueIndex = rightChildIndex;
-        } else {
-            return;
-        }
-        if (smallerValueIndex >= 0 && data[smallerValueIndex] < data[nodeIndex]) {
-            int tmp = data[nodeIndex];
-            data[nodeIndex] = data[smallerValueIndex];
-            data[smallerValueIndex] = tmp;
-            Node temp2 = node[nodeIndex];
-	    	node[nodeIndex] = node[smallerValueIndex];
-	    	node[smallerValueIndex] = temp2;
-            nodeIndex = smallerValueIndex;
-            bubbleDOWN(nodeIndex);
-        }
-    }
-     
- 
-    public void makeHeap(int[] array,Node[] map) throws HeapException {
-        for (int i = 0; i < array.length; i++) {
-            this.insert(array[i],map[i]);
-        }
+public class Heap<T extends Comparable<T>> extends PriorityQueue<T> {
+	
+    private static final int DEFAULT_CAPACITY = 10;
+    protected T[] array;
+    protected int size;
+    
+    @SuppressWarnings("unchecked")
+	public Heap () {
+        array = (T[])new Comparable[DEFAULT_CAPACITY];  
+        size = 0;
     }
     
-    public static void main(String[] args){
-		System.out.println("I am working");
-	}	
+    public boolean add(T value) {
+        // grow array if needed
+        if (size >= array.length - 1) {
+            array = this.resize();
+        }        
+        // place element into heap at bottom
+        size++;
+        int index = size;
+        array[index] = value;
+        
+        bubbleUp();
+        return true;
+    }
+    
+    public boolean isEmpty() {
+        return size == 0;
+    }
+
+    public T peek() {
+        if (this.isEmpty()) {
+            throw new IllegalStateException();
+        }
+        return array[1];
+    }
+
+    public T remove() {
+    	T result = peek();
+    	
+    	array[1] = array[size];
+    	array[size] = null;
+    	size--;
+    	
+    	bubbleDown(); 	
+    	return result;
+    }
+    
+    public String toString() {
+        return Arrays.toString(array);
+    }
+
+    protected void bubbleDown() {
+        int index = 1;
+        
+        while (hasLeftChild(index)) {
+            int smallerChild = leftIndex(index);
+            
+            if (hasRightChild(index)
+                && array[leftIndex(index)].compareTo(array[rightIndex(index)]) > 0) {
+                smallerChild = rightIndex(index);
+            } 
+            
+            if (array[index].compareTo(array[smallerChild]) > 0) {
+                swap(index, smallerChild);
+            } else {
+                break;
+            }
+            
+            index = smallerChild;
+        }        
+    }
+    
+    protected void bubbleUp() {
+        int index = this.size;
+        
+        while (hasParent(index)
+                && (parent(index).compareTo(array[index]) > 0)) {
+            swap(index, parentIndex(index));
+            index = parentIndex(index);
+        }        
+    }
+    
+    
+    protected boolean hasParent(int i) {
+        return i > 1;
+    }
+    
+    
+    protected int leftIndex(int i) {
+        return i * 2;
+    }
+    
+    
+    protected int rightIndex(int i) {
+        return i * 2 + 1;
+    }
+    
+    
+    protected boolean hasLeftChild(int i) {
+        return leftIndex(i) <= size;
+    }
+    
+    
+    protected boolean hasRightChild(int i) {
+        return rightIndex(i) <= size;
+    }
+    
+    
+    protected T parent(int i) {
+        return array[parentIndex(i)];
+    }
+    
+    
+    protected int parentIndex(int i) {
+        return i / 2;
+    }
+    
+    
+    protected T[] resize() {
+        return Arrays.copyOf(array, array.length * 2);
+    }
+    
+    
+    protected void swap(int index1, int index2) {
+        T tmp = array[index1];
+        array[index1] = array[index2];
+        array[index2] = tmp;        
+    }
 }
  
 class HeapException extends Exception {
