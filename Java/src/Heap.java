@@ -20,7 +20,7 @@
 import java.util.Arrays;
 import java.util.PriorityQueue;
 
-public class Heap<T extends Comparable<T>> extends PriorityQueue<T> {
+public class Heap<T extends Comparable> extends PriorityQueue<T> {
 	
     private static final int DEFAULT_CAPACITY = 10;
     protected T[] array;

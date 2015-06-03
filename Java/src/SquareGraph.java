@@ -18,17 +18,25 @@
 	**************************************************/
 
 import java.awt.Point;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 public class SquareGraph {
 	
 	private Node[][] map;
 	private Point startPosition;
 	private Point targetPosition;
+	private Heap<Node> openNodes;
+	private Set<Node> closedNodes;
 	
 	public SquareGraph(int mapDimension){
 		map = new Node[mapDimension][mapDimension];
 		startPosition = new Point();
 		targetPosition = new Point();
+		openNodes = new Heap<Node>();
+		closedNodes = new HashSet<Node>();
 	}
 	
 	public Node getMapCell(Point coord){
@@ -54,8 +62,45 @@ public class SquareGraph {
 	public void setTargetPosition(Point coord){
 		startPosition.setLocation(coord);
 	}
+	
 	public int getDimension(){
 		return map.length;
+	}
+	
+	public void addToOpenNodes(Node n){
+		openNodes.add(n);
+	}
+	
+	public Node popBestOpenNode(){
+		return openNodes.remove();
+	}
+	
+	public void addToClosedNodes(Node n){
+		closedNodes.add(n);
+	}
+	
+	static double calculateDistance(Point from, Point to){
+		return Math.pow(Math.pow(from.getX()-to.getX(), 2) + Math.pow(from.getY() - to.getY(), 2) , 0.5);
+	}
+	
+	public ArrayList<Node> reconstructPath(Node target){
+		ArrayList<Node> path = new ArrayList<Node>();
+		Node current = target;
+		
+		while(current.getParent() != null){
+			path.add(target.getParent());
+			current = current.getParent();
+		}
+		Collections.reverse(path);
+		return path;
+	}
+	
+	public ArrayList<Node> executeAStar(){
+		Node start = getMapCell(getStartPosition());
+		Node target = getMapCell(getTargetPosition());
+		addToOpenNodes(start);
+		
+		
 	}
 	
 }

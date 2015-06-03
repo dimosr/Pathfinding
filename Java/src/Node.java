@@ -17,8 +17,8 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	**************************************************/
 
-class Node
-{
+class Node implements Comparable<Node>{
+	
 	private enum State{
 		UNVISITED, OPEN, CLOSED
 	}
@@ -26,10 +26,10 @@ class Node
 		NORMAL, OBSTACLE
 	}
 	
-	int costFromStart;
-	int costToTarget;
-	int totalCost;
-	Node parent;
+	private double costFromStart;
+	private double costToTarget;
+	private double totalCost;
+	private Node parent;
 	State state;
 	Type type;
 	int x;
@@ -49,17 +49,50 @@ class Node
 		this.x = x;
 		this.y = y;
 	}
-
-	public void Distance_Evalutation(int fromX, int fromY, int toX, int toY){
-		int i;
-		if (fromX <= toX) {
-			i = 0;
-		} else {
-			i = 2 * (fromX - toX);
+	
+	public Node getParent(){
+		return parent;
+	}
+	
+	public void setParent(Node n){
+		this.parent = n;
+	}
+	
+	public double getCostFromStart(){
+		return costFromStart;
+	}
+	
+	public double getCostToTarget(){
+		return costToTarget;
+	}
+	
+	public void setCostFromStart(double cost){
+		this.costFromStart = cost;
+	}
+	
+	public void setCostToTarget(double cost){
+		this.costFromStart = cost;
+	}
+	
+	public double getTotalCost(){
+		return totalCost;
+	}
+	
+	public void setTotalCost(double cost){
+		this.totalCost = cost;
+	}
+	
+	@Override
+	public int compareTo(Node n){
+		if(this.getTotalCost() < n.getTotalCost()){
+			return -1;
 		}
-		int j = Math.abs(toY - fromY);
-
-		this.costToTarget = (i + j);
+		else if(this.getTotalCost() > n.getTotalCost()){
+			return 1;
+		}
+		else{
+			return 0;
+		}
 	}
 
 }

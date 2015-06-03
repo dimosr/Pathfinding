@@ -36,6 +36,8 @@ public class A_StarAlgorithm {
 
 			InputHandler handler = new InputHandler();
 			SquareGraph graph = handler.readMap(filename);
+			
+			graph.executeAStar();
 		}
 	}
 	
