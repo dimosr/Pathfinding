@@ -1,0 +1,16 @@
+<project basedir="." default="main" >
+
+	<property name="src.dir"     value="src"/>
+	<property name="build.dir"   value="build"/>
+
+	<target name="clean">
+        <delete dir="${build.dir}"/>
+    </target>
+
+    <target name="compile">
+        <mkdir dir="build"/>
+        <javac srcdir="${src.dir}" destdir="build"/>
+    </target>
+
+    <target name="main" depends="clean,compile"/>
+</project>
