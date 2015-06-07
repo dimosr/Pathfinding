@@ -1,36 +1,31 @@
-
-
-IMPLEMENTATION OF A*<br/> ARTIFICIAL INTELLIGENCE ALGORITHM<br/> (in Java)
-======================================================================
+# IMPLEMENTATION OF A* ARTIFICIAL INTELLIGENCE ALGORITHM (in Java)
 
 Introduction
-----------------------------------------------------------------------
-This repository contains an implementation for the A* algorithm in language Java.
-First of all, download the project :
+------------
+
+This repository contains the implementation for the A* algorithm in language Java.
+* folder *src/* contains the classes used
+* folder *input_files/* contains the test example input files
+* in the *root* folder, you can find the ant script used for the compilation
+
+Compilation & Execution
+-----------------------
+
+####Compilation
 ```sh
-git clone https://github.com/dimosr7/A.I.
-cd A.I.
+git clone https://github.com/dimosr7/Pathfinding
+cd Java
+ant
 ```
 
-Language Java
-------------------------------------------------------------------------------------------------
-
-* In the folder *'src'*, the file A_StarAlgorithm contains the main class used to resolve the problem of pathfinding.
-* In folder *'input_files'*, there are sample input files that can be used to test the program.
-* The input files contain a map with certain "obstacles" and the initial places of 2 "robots".
-* After executing the program, the output is the number of moves the first robot has to do at least to reach the second robot in its initial place
-
-To test the application :
+####Execution
 ```sh
-#Compile the application
-javac Java/src/InvalidLetterException.java Java/src/BinaryMinHeap_PriorityQueue.java Java/src/SearchGraphNode.java Java/src/A_StarAlgorithm.java 
-#Test the application with sample inputs
-java -cp Java/src/A_StarAlgorithm Java/input_files/small_1.txt
-java -cp Java/src/A_StarAlgorithm Java/input_files/small_2.txt
-java -cp Java/src/A_StarAlgorithm Java/input_files/medium_1.txt
-java -cp Java/src/A_StarAlgorithm Java/input_files/medium_2.txt
-java -cp Java/src/A_StarAlgorithm Java/input_files/medium_3.txt
-java -cp Java/src/A_StarAlgorithm Java/input_files/medium_4.txt
-java -cp Java/src/A_StarAlgorithm Java/input_files/medium_5.txt
-java -cp Java/src/A_StarAlgorithm Java/input_files/large.txt
+java -cp build A_StarAlgorithm input_files/small_1.txt 
+java -cp build A_StarAlgorithm input_files/small_2.txt 
+java -cp build A_StarAlgorithm input_files/medium_1.txt 
+java -cp build A_StarAlgorithm input_files/medium_2.txt 
+java -cp build A_StarAlgorithm input_files/medium_3.txt 
+java -cp build A_StarAlgorithm input_files/medium_4.txt 
+java -cp build A_StarAlgorithm input_files/medium_5.txt 
+java -cp build A_StarAlgorithm input_files/large.txt 
 ```
