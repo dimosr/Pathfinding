@@ -15,7 +15,7 @@ Compilation & Execution
 ####Compilation
 ```sh
 git clone https://github.com/dimosr7/Pathfinding
-cd C++
+cd Pathfinding/C++
 make
 ```
 

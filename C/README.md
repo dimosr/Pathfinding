@@ -21,7 +21,7 @@ In this implementation, the algorithm is dynamic.<br>
 
 ```sh
 git clone https://github.com/dimosr7/Pathfinding
-cd C
+cd Pathfinding/C
 make
 ```
 

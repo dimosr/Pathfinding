@@ -7,7 +7,6 @@ This repository contains the implementation for A*, BFS, DFS in Javascript.
 First of all, download the project :
 ```sh
 git clone https://github.com/dimosr7/Pathfinding.
-cd A.I.
 ```
 
 Tools
@@ -45,7 +44,7 @@ Build Process
 If you want to create a minified (faster) version, you can use the build.xml.
 Just install the Apache Ant and execute :
 ```sh
-cd Javascript
+cd Pathfinding/Javascript
 ant
 ```
 A build folder will be created containing the minified version, which is also visible now in the [DEMO](http://www.dimosraptis.com/Pathfinding)
