@@ -19,5 +19,4 @@ Implementations
 * The folder [*'C++'*](https://github.com/dimosr7/Pathfinding/tree/master/C++), contains the implementation for A* in C++.
 
 <br/>
-*Note*:<br/>
-\* **Each folder contains a separate README with more details**
+Note: Each folder contains a separate README with more details
